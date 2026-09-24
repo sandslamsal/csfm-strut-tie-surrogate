@@ -21,15 +21,17 @@ LABEL = {"deepBeam": "Deep beam", "hammerhead": "Hammerhead",
 ORDER = ["deepBeam", "hammerhead", "multiColumnBent", "pileCap"]
 INK, INK2, GRID = "0.15", "0.40", "0.90"
 
+# every figure is drawn at the text width (7.0 in) so that 1 pt here is 1 pt on the page
+TEXTWIDTH = 7.0
 RC = {
-    "font.family": "serif", "font.size": 9, "mathtext.fontset": "cm",
+    "font.family": "STIXGeneral", "font.size": 9, "mathtext.fontset": "stix",
     "axes.linewidth": 0.8, "axes.edgecolor": "0.35", "axes.labelcolor": INK,
-    "axes.titlesize": 9.5, "axes.titleweight": "bold", "axes.titlelocation": "left",
+    "axes.titlesize": 10, "axes.titleweight": "bold", "axes.titlelocation": "left",
     "axes.titlepad": 7.0, "axes.labelsize": 9,
     "xtick.color": "0.35", "ytick.color": "0.35", "xtick.labelcolor": INK,
-    "ytick.labelcolor": INK, "xtick.labelsize": 8, "ytick.labelsize": 8,
+    "ytick.labelcolor": INK, "xtick.labelsize": 8.5, "ytick.labelsize": 8.5,
     "xtick.major.size": 3, "ytick.major.size": 3,
-    "legend.fontsize": 7.8, "legend.frameon": False, "legend.handlelength": 1.8,
+    "legend.fontsize": 8.5, "legend.frameon": False, "legend.handlelength": 1.8,
     "lines.linewidth": 1.6, "lines.markersize": 4.5,
     "savefig.dpi": 600, "pdf.fonttype": 42, "figure.dpi": 100,
 }
@@ -48,12 +50,12 @@ def tidy(ax, grid="both"):
 def panel(ax, tag, title=""):
     """Bold panel tag and title, left-aligned on the axes, same height everywhere."""
     text = f"({tag}) {title}" if title else f"({tag})"
-    ax.set_title(text, loc="left", fontweight="bold", fontsize=9.5, pad=7, color=INK)
+    ax.set_title(text, loc="left", fontweight="bold", fontsize=10, pad=7, color=INK)
 
 
 def legend_below(fig, handles, labels, ncol=None, y=-0.02):
     """One shared legend centred under all panels."""
     ncol = ncol or len(labels)
     return fig.legend(handles, labels, loc="lower center", ncol=ncol, frameon=False,
-                      bbox_to_anchor=(0.5, y), fontsize=8, handletextpad=0.5,
+                      bbox_to_anchor=(0.5, y), fontsize=8.5, handletextpad=0.5,
                       columnspacing=1.6)

@@ -26,7 +26,7 @@ import torch
 from config import get_config
 from data import load_archetype
 from model import STMNet
-from figstyle import panel
+from figstyle import panel, legend_below
 
 # archetype -> (legend label, marker, colour) -- colours match the csfd palette
 ARCHS = [
@@ -39,11 +39,6 @@ ARCHS = [
 PNG = "../figures/results_parity.pdf"
 TEX = "../figures/results_parity.tex"
 
-plt.rcParams.update({
-    "font.family": "serif", "font.size": 9,
-    "axes.linewidth": 0.9, "savefig.dpi": 600, "pdf.fonttype": 42,
-    "mathtext.fontset": "cm",
-})
 
 
 def r2_score(true: np.ndarray, pred: np.ndarray) -> float:
@@ -71,7 +66,7 @@ def collect() -> list:
     return series
 
 
-def parity_panel(ax, series, lo, hi) -> None:
+def parity_panel(ax, series, lo, hi) -> list:
     xs = np.array([lo, hi])
     # tolerance bands
     for fac in (0.90, 1.10):
@@ -79,15 +74,17 @@ def parity_panel(ax, series, lo, hi) -> None:
     for fac in (0.95, 1.05):
         ax.plot(xs, xs * fac, ls=":", lw=0.8, color="0.65", zorder=1)
     ax.plot(xs, xs, ls="--", lw=1.1, color="0.30", zorder=2)
-    ax.annotate("$\\pm$5%", (hi, hi * 1.05), fontsize=6.3, color="0.45",
+    ax.annotate("$\\pm$5%", (hi, hi * 1.05), fontsize=8, color="0.45",
                 ha="right", va="bottom")
-    ax.annotate("$\\pm$10%", (hi, hi * 1.10), fontsize=6.3, color="0.45",
+    ax.annotate("$\\pm$10%", (hi, hi * 1.10), fontsize=8, color="0.45",
                 ha="right", va="bottom")
 
+    handles = []
     for label, mark, colour, true, pred in series:
-        ax.scatter(true, pred, s=20, marker=mark, facecolor=colour,
-                   edgecolor="white", linewidth=0.35, alpha=0.80,
-                   zorder=3, label=f"{label}  ($R^2$ {r2_score(true, pred):.3f})")
+        h = ax.scatter(true, pred, s=20, marker=mark, facecolor=colour,
+                       edgecolor="white", linewidth=0.35, alpha=0.80,
+                       zorder=3, label=f"{label}  ($R^2$ {r2_score(true, pred):.3f})")
+        handles.append(h)
 
     ax.set_xlim(lo, hi)
     ax.set_ylim(lo, hi)
@@ -95,8 +92,8 @@ def parity_panel(ax, series, lo, hi) -> None:
     ax.set_xticks([0.5, 1.0, 1.5, 2.0, 2.5, 3.0])
     ax.set_yticks([0.5, 1.0, 1.5, 2.0, 2.5, 3.0])
     ax.set_xlabel("Reference solver failure load factor, $\\lambda_f$",
-                  fontsize=9.2)
-    ax.set_ylabel("Surrogate prediction, $\\hat{\\lambda}_f$", fontsize=9.2)
+                  fontsize=9)
+    ax.set_ylabel("Surrogate prediction, $\\hat{\\lambda}_f$", fontsize=9)
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.spines["left"].set_color("0.4")
@@ -104,11 +101,8 @@ def parity_panel(ax, series, lo, hi) -> None:
     ax.tick_params(length=3, color="0.4")
     ax.grid(True, linewidth=0.4, color="0.90", zorder=0)
     ax.set_axisbelow(True)
-    leg = ax.legend(loc="upper left", frameon=True, fontsize=7.4,
-                    handletextpad=0.4, borderpad=0.6, labelspacing=0.5)
-    leg.get_frame().set_edgecolor("0.80")
-    leg.get_frame().set_linewidth(0.6)
-    panel(ax, "a", "Parity on the held-out test designs")
+    panel(ax, "a", "Parity on the test designs")
+    return handles
 
 
 def error_panel(ax, series) -> None:
@@ -135,17 +129,17 @@ def error_panel(ax, series) -> None:
         mape = float(np.mean(np.abs(err)))
         ax.text(0.985, y + 0.34, f"MAPE {mape:.1f}%",
                 transform=ax.get_yaxis_transform(),
-                ha="right", va="center", fontsize=6.8, color="0.30")
+                ha="right", va="center", fontsize=8, color="0.30")
 
     ax.axvline(0.0, ls="--", lw=1.0, color="0.30", zorder=1)
     ax.set_yticks(pos)
-    ax.set_yticklabels([s[0] for s in series], fontsize=8.4)
+    ax.set_yticklabels([s[0] for s in series], fontsize=9)
     ax.set_ylim(0.4, len(series) + 0.6)
     lim = max(np.max(np.abs(e)) for e in errs) * 1.10
     ax.set_xlim(-lim, lim)
     ax.set_xlabel("Surrogate prediction error, "
                   "$(\\hat{\\lambda}_f-\\lambda_f)/\\lambda_f$ (%)",
-                  fontsize=9.2)
+                  fontsize=9)
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.spines["left"].set_color("0.4")
@@ -153,7 +147,7 @@ def error_panel(ax, series) -> None:
     ax.tick_params(length=3, color="0.4")
     ax.xaxis.grid(True, linewidth=0.4, color="0.90", zorder=0)
     ax.set_axisbelow(True)
-    panel(ax, "b", "Signed prediction error per archetype")
+    panel(ax, "b", "Signed error per archetype")
 
 
 def write_tex() -> None:
@@ -188,10 +182,12 @@ def main() -> None:
     lo = float(min(all_true.min(), all_pred.min())) - 0.10
     hi = float(max(all_true.max(), all_pred.max())) + 0.15
 
-    fig = plt.figure(figsize=(9.2, 4.35))
-    gs = fig.add_gridspec(1, 2, width_ratios=[1.0, 1.04], wspace=0.28)
-    parity_panel(fig.add_subplot(gs[0]), series, lo, hi)
+    fig = plt.figure(figsize=(7.0, 3.4))
+    gs = fig.add_gridspec(1, 2, width_ratios=[1.0, 1.1], wspace=0.6)
+    handles = parity_panel(fig.add_subplot(gs[0]), series, lo, hi)
     error_panel(fig.add_subplot(gs[1]), series)
+    fig.subplots_adjust(bottom=0.27)
+    legend_below(fig, handles, [h.get_label() for h in handles], ncol=4, y=0.005)
 
     fig.savefig(PNG, bbox_inches="tight")
     plt.close(fig)

@@ -55,11 +55,6 @@ SIG_FLOOR = 1e-3      # floor on sigma in the normalised conformal score
 PNG = "../figures/uncertainty.pdf"
 TEX = "../figures/uncertainty.tex"
 
-plt.rcParams.update({
-    "font.family": "serif", "font.size": 9,
-    "axes.linewidth": 0.9, "savefig.dpi": 600, "pdf.fonttype": 42,
-    "mathtext.fontset": "cm",
-})
 
 
 def r2_score(true: np.ndarray, pred: np.ndarray) -> float:
@@ -185,7 +180,7 @@ def summarise(res: dict) -> dict:
 
 
 def make_figure(results: dict) -> None:
-    fig, (axp, axc) = plt.subplots(1, 2, figsize=(9.2, 4.3))
+    fig, (axp, axc) = plt.subplots(1, 2, figsize=(7.0, 3.4), gridspec_kw={"wspace": 0.45})
 
     # ---- (a) ensemble parity with 90% conformal intervals ----
     all_t = np.concatenate([r["test"]["true"] for r in results.values()])
@@ -206,9 +201,9 @@ def make_figure(results: dict) -> None:
     axp.set_ylim(lo, hi)
     axp.set_aspect("equal")
     axp.set_xlabel("Reference solver failure load factor, $\\lambda_f$",
-                   fontsize=9.2)
+                   fontsize=9)
     axp.set_ylabel("Ensemble mean with 90% conformal interval",
-                   fontsize=9.2)
+                   fontsize=9)
     for sp in ("top", "right"):
         axp.spines[sp].set_visible(False)
     for sp in ("left", "bottom"):
@@ -216,17 +211,17 @@ def make_figure(results: dict) -> None:
     axp.tick_params(length=3, color="0.4")
     axp.grid(True, linewidth=0.4, color="0.90", zorder=0)
     axp.set_axisbelow(True)
-    leg = axp.legend(loc="upper left", frameon=True, fontsize=7.6,
+    leg = axp.legend(loc="upper left", frameon=True, fontsize=8,
                      handletextpad=0.4, borderpad=0.6, labelspacing=0.4)
     leg.get_frame().set_edgecolor("0.80")
     leg.get_frame().set_linewidth(0.6)
-    panel(axp, "a", "Ensemble mean with 90% conformal interval")
+    panel(axp, "a", "Ensemble mean and 90% interval")
 
     # ---- (b) reliability diagram: raw ensemble vs conformal ----
     axc.plot([0, 1], [0, 1], ls="--", lw=1.0, color="0.40", zorder=2)
-    axc.text(0.97, 0.88, "under-confident", fontsize=6.6, color="0.50",
-             ha="right", va="center")
-    axc.text(0.60, 0.16, "over-confident", fontsize=6.6, color="0.50",
+    axc.text(0.14, 0.62, "Under-confident", fontsize=8, color="0.50",
+             ha="left", va="center")
+    axc.text(0.86, 0.12, "Over-confident", fontsize=8, color="0.50",
              ha="center", va="center")
 
     levels = np.linspace(0.10, 0.95, 30)
@@ -245,7 +240,7 @@ def make_figure(results: dict) -> None:
     raw_obs = np.array([float(np.mean(test_all_err <= z * test_all_std))
                         for z in zs])
     axc.plot(levels, raw_obs, "-", color="#B8352B", lw=1.6, zorder=4,
-             label="raw ensemble $\\sigma$")
+             label="Raw ensemble spread")
 
     # conformal: per-archetype quantile, pooled observed coverage
     conf_obs = []
@@ -257,13 +252,13 @@ def make_figure(results: dict) -> None:
             hit.append(np.abs(t["mean"] - t["true"]) <= q * t["std"])
         conf_obs.append(float(np.mean(np.concatenate(hit))))
     axc.plot(levels, conf_obs, "-", color="0.15", lw=1.9, zorder=5,
-             label="conformal calibration")
+             label="Conformal interval")
 
     axc.set_xlim(0, 1)
     axc.set_ylim(0, 1)
     axc.set_aspect("equal")
-    axc.set_xlabel("Target coverage", fontsize=9.2)
-    axc.set_ylabel("Observed coverage on test designs", fontsize=9.2)
+    axc.set_xlabel("Target coverage", fontsize=9)
+    axc.set_ylabel("Observed coverage on test designs", fontsize=9)
     for sp in ("top", "right"):
         axc.spines[sp].set_visible(False)
     for sp in ("left", "bottom"):
@@ -271,11 +266,11 @@ def make_figure(results: dict) -> None:
     axc.tick_params(length=3, color="0.4")
     axc.grid(True, linewidth=0.4, color="0.90", zorder=0)
     axc.set_axisbelow(True)
-    leg = axc.legend(loc="upper left", frameon=True, fontsize=7.6,
+    leg = axc.legend(loc="upper left", frameon=True, fontsize=8,
                      handletextpad=0.6, borderpad=0.6)
     leg.get_frame().set_edgecolor("0.80")
     leg.get_frame().set_linewidth(0.6)
-    panel(axc, "b", "Reliability diagram, pooled")
+    panel(axc, "b", "Reliability diagram")
 
     fig.savefig(PNG, bbox_inches="tight")
     plt.close(fig)

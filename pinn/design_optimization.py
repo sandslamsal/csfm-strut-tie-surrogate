@@ -55,9 +55,6 @@ U_DIMS = ["span", "height", "thickness", "supportWidth", "P",
 BASE = {"span": 4000.0, "height": 2200.0, "thickness": 500.0,
         "supportWidth": 400.0, "fck": 35.0, "fy": 500.0}
 
-plt.rcParams.update({"font.family": "serif", "font.size": 9,
-                     "axes.linewidth": 0.9, "savefig.dpi": 600, "pdf.fonttype": 42,
-                     "mathtext.fontset": "cm"})
 C_SUR, C_SOL, C_OK, C_BAD = "#2B63A6", "#B8352B", "#1F8A70", "#D9761A"
 C_FLAG = "#7A4FA3"
 
@@ -252,32 +249,32 @@ print("\n[demo] wrote runs/design_optimization.json")
 # --------------------------------------------------------------------------- #
 # 6. figure                                                                   #
 # --------------------------------------------------------------------------- #
-fig, (axL, axR) = plt.subplots(1, 2, figsize=(9.2, 3.9))
+fig, (axL, axR) = plt.subplots(1, 2, figsize=(7.0, 3.2), gridspec_kw={"wspace": 0.45})
 
 # (a) capacity vs steel: surrogate (conformal bars) + solver, constraint, optima
 As = np.array([g["As"] for g in grid]) / 1e3            # 10^3 mm^2
 order = np.argsort(As)
 axL.axhline(1.0, color="0.45", lw=1.0, ls="--", zorder=1)
-axL.text(As.max() * 0.99, 1.02, r"$\lambda_f = 1$ (required)", ha="right",
-         va="bottom", fontsize=7.5, color="0.35")
+axL.text(As.max() * 0.99, 1.02, r"$\lambda_f = 1$ required", ha="right",
+         va="bottom", fontsize=8, color="0.35")
 axL.errorbar(As, lam_s, yerr=Q90 * np.array([g["lam_std"] for g in grid]),
              fmt="o", ms=3.2, color=C_SUR, ecolor=C_SUR, elinewidth=0.7,
              capsize=1.3, alpha=0.85, zorder=3,
-             label="surrogate (90\\% conformal)")
+             label="Surrogate, 90% interval")
 axL.scatter(As, lam_v, s=20, marker="x", color=C_SOL, linewidth=0.9,
-            zorder=4, label="reference solver")
+            zorder=4, label="Reference solver")
 flagged = [i for i, g in enumerate(grid) if g["flag"]]
 if flagged:
     axL.scatter(As[flagged], lam_s[flagged], s=80, marker="o", facecolor="none",
                 edgecolor=C_FLAG, linewidth=1.5, zorder=5,
-                label="domain-of-validity flag")
-for opt, col, lab in [(opt_point, C_BAD, "point-estimate optimum"),
-                      (opt_uq, C_OK, "reliability-aware optimum")]:
+                label="Flagged out of domain")
+for opt, col, lab in [(opt_point, C_BAD, "Optimum on the mean"),
+                      (opt_uq, C_OK, "Optimum on the lower bound")]:
     axL.scatter([opt["As"] / 1e3], [opt["lam_mean"]], s=120, marker="*",
                 facecolor=col, edgecolor="black", linewidth=0.5, zorder=6, label=lab)
 axL.set_xlabel(r"bottom-tie steel area $A_s$  ($10^3\,\mathrm{mm}^2$)")
 axL.set_ylabel(r"failure load factor $\lambda_f$")
-tidy(axL); axL.legend(fontsize=6.6, loc="upper left")
+tidy(axL); axL.legend(fontsize=8, loc="upper center", bbox_to_anchor=(0.5, -0.2), ncol=2, columnspacing=1.2)
 panel(axL, "a", "Reinforcement minimisation")
 
 # (b) member-force state at the UQ optimum: surrogate vs solver
@@ -287,21 +284,21 @@ fv = np.array([opt_uq["forces_solver"].get(m, 0.0) for m in ids]) / 1e3
 ordf = np.argsort(-np.abs(fv))[:10]                      # 10 largest by |solver|
 ids10 = [ids[i] for i in ordf]
 x = np.arange(len(ids10))
-axR.bar(x - 0.2, fs[ordf], width=0.38, color=C_SUR, label="surrogate", zorder=3)
+axR.bar(x - 0.2, fs[ordf], width=0.38, color=C_SUR, label="Surrogate", zorder=3)
 axR.bar(x + 0.2, fv[ordf], width=0.38, color=C_SOL, alpha=0.85,
-        label="reference solver", zorder=3)
+        label="Reference solver", zorder=3)
 axR.axhline(0, color="0.5", lw=0.7)
 gi = ids10.index(gov_id) if gov_id in ids10 else None
 if gi is not None:
-    axR.annotate("governing tie", (gi, fv[ordf][gi]), textcoords="offset points",
-                 xytext=(0, 10), ha="center", fontsize=7,
-                 arrowprops=dict(arrowstyle="->", lw=0.7))
+    axR.text(gi, max(fs[ordf][gi], fv[ordf][gi]) * 1.04, "governing tie", ha="center", va="bottom", fontsize=8)
 axR.set_xticks(x)
-axR.set_xticklabels(ids10, rotation=60, fontsize=6.5, ha="right")
+axR.set_xticklabels(ids10, rotation=60, fontsize=8, ha="right")
 axR.set_ylabel(r"member force at failure  (kN)")
-tidy(axR, grid="y"); axR.legend(fontsize=7, loc="upper right")
+lo_, hi_ = axR.get_ylim(); axR.set_ylim(lo_, hi_ * 1.18)
+tidy(axR, grid="y"); axR.legend(fontsize=8, loc="upper right")
 panel(axR, "b", "Force state at the optimum")
 
 fig.tight_layout()
+fig.subplots_adjust(bottom=0.32)
 fig.savefig("../figures/optimization.pdf", bbox_inches="tight")
 print("[demo] wrote ../figures/optimization.pdf")

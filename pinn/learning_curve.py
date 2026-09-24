@@ -46,10 +46,6 @@ SPLIT_SEEDS = [20260517, 1, 7, 42, 2024]   # repeated-split seeds (first = paper
 PNG = "../figures/learning_curve.pdf"
 TEX = "../figures/learning_curve.tex"
 
-plt.rcParams.update({
-    "font.family": "serif", "font.size": 9,
-    "axes.linewidth": 0.9, "savefig.dpi": 600, "pdf.fonttype": 42, "mathtext.fontset": "cm",
-})
 
 
 def train_inmem(data, cfg, train_idx) -> STMNet:
@@ -139,28 +135,64 @@ def main() -> None:
         os.makedirs("runs", exist_ok=True)
         json.dump(curves, open(CACHE, "w"), indent=2)
 
-    from figstyle import COLOUR, MARKER, LABEL, ORDER, tidy, panel, INK2
-    fig, ax = plt.subplots(figsize=(5.6, 3.7))
+    from figstyle import COLOUR, MARKER, LABEL, ORDER, tidy, panel, legend_below, INK2
+    # (b) needs the width sweep of experiment E6
+    for cand in ("../revision1/experiments/e6_width_sweep.json", "../experiments/e6_width_sweep.json"):
+        if os.path.exists(cand):
+            width = json.load(open(cand))
+            break
+    else:
+        width = None
+
+    fig, (ax, bx) = plt.subplots(1, 2, figsize=(7.0, 3.4), gridspec_kw={"wspace": 0.45})
     handles = []
     for arch in ORDER:
         c = curves[arch]
+        n = np.array(c["frac"]) / 100.0 * c["ntr"]
         mm, sm = np.array(c["mape"]), np.array(c["std"])
         col = COLOUR[arch]
-        ax.fill_between(c["frac"], mm - sm, mm + sm, color=col, alpha=0.13, lw=0, zorder=1)
-        h, = ax.plot(c["frac"], mm, "-", marker=MARKER[arch], color=col, lw=1.6, ms=4.8,
-                     markeredgecolor="white", markeredgewidth=0.7, zorder=3,
-                     label=f"{LABEL[arch]} ({c['ntr']} designs)")
+        ax.fill_between(n, mm - sm, mm + sm, color=col, alpha=0.14, lw=0, zorder=1)
+        h, = ax.plot(n, mm, "-", marker=MARKER[arch], color=col, lw=1.7, ms=5.2,
+                     markeredgecolor="white", markeredgewidth=0.8, zorder=3, label=LABEL[arch])
         handles.append(h)
-    ax.set_xlabel("Fraction of the training set used (%)")
+        ax.annotate(f"{mm[-1]:.1f}%", (n[-1], mm[-1]), xytext=(6, 0), textcoords="offset points",
+                    fontsize=8, color=col, va="center")
+    ax.set_xlabel("Training designs")
     ax.set_ylabel("Test MAPE on the failure load (%)")
-    ax.set_xlim(5, 105)
-    ax.set_ylim(0, 22)
-    ax.set_xticks([10, 25, 50, 75, 100])
+    ax.set_xlim(0, 600)
+    ax.set_ylim(0, 24)
+    ax.set_xticks([0, 100, 200, 300, 400, 500])
     tidy(ax)
-    ax.legend(handles=handles, loc="upper right", fontsize=7.4, title="full training set",
-              title_fontsize=7.4)
-    panel(ax, "a", "Learning curves: mean of three subsamples, band one standard deviation")
-    fig.tight_layout()
+    panel(ax, "a", "Learning curves")
+
+    if width is not None:
+        for arch in ORDER:
+            rows = width[arch]["widths"]
+            params = np.array([r["params"] for r in rows])
+            te = np.array([r["test_mape"] for r in rows])
+            tr = np.array([r["train_mape"] for r in rows])
+            sd = np.array([r["test_mape_sd"] for r in rows])
+            col = COLOUR[arch]
+            bx.fill_between(params, te - sd, te + sd, color=col, alpha=0.14, lw=0, zorder=1)
+            bx.plot(params, te, "-", marker=MARKER[arch], color=col, lw=1.7, ms=5.2,
+                    markeredgecolor="white", markeredgewidth=0.8, zorder=3)
+            bx.plot(params, tr, "--", color=col, lw=1.2, zorder=2)
+        p128 = width["deepBeam"]["widths"][3]["params"]
+        bx.axvline(p128, ls=":", lw=0.9, color=INK2, zorder=1)
+        bx.text(p128 * 1.12, 0.35, "Width 128", fontsize=8, color=INK2, va="bottom")
+        bx.set_xscale("log")
+        bx.set_xlabel("Trainable parameters (six hidden layers)")
+        bx.set_ylabel("MAPE on the failure load (%)")
+        bx.set_ylim(0, 11)
+        tidy(bx)
+        from matplotlib.lines import Line2D
+        style = [Line2D([0], [0], color=INK2, lw=1.7, marker="o", ms=4, markeredgecolor="white"),
+                 Line2D([0], [0], color=INK2, lw=1.2, ls="--")]
+        bx.legend(style, ["Test split", "Training split"], loc="upper right", fontsize=8, bbox_to_anchor=(1.0, 0.98))
+        panel(bx, "b", "Network-width sweep")
+    fig.tight_layout(w_pad=2.0)
+    fig.subplots_adjust(bottom=0.22)
+    legend_below(fig, handles, [LABEL[a] for a in ORDER], ncol=4, y=0.005)
     fig.savefig(PNG, bbox_inches="tight")
     plt.close(fig)
     print(f"wrote {PNG}")
@@ -169,13 +201,16 @@ def main() -> None:
         fh.write(r"""%% Figure: learning curves rendered by pinn/learning_curve.py.
 \begin{figure}[!htb]
   \centering
-  \includegraphics[width=0.78\linewidth]{learning_curve.pdf}
-  \caption{Learning curves: held-out test mean absolute percentage error
-    against the fraction of the training set used, for each archetype (the
-    full set is 378--525 designs, fewest for the hammerhead). Each point is
-    the mean of three independent random training subsamples; the band is one
-    standard deviation. The error flattens well before the full training set,
-    indicating the networks are not starved of data at the sizes used.}
+  \includegraphics[width=\linewidth]{learning_curve.pdf}
+  \caption{Data efficiency and network size. (a)~Learning curves: held-out
+    test mean absolute percentage error against the number of training
+    designs for each archetype, each point the mean of three independent
+    random subsamples and the band one standard deviation; the label gives
+    the error at the full training set. (b)~Network-width sweep at six hidden
+    layers, three seeds: test error (solid, band one standard deviation) and
+    training error (dashed) against the number of trainable parameters. The
+    train/test gap does not grow with size and the test error is flat beyond
+    the reported width of 128.}
   \label{fig:learning_curve}
 \end{figure}
 """)

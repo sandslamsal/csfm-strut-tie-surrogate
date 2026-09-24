@@ -29,7 +29,7 @@ from config import get_config
 from data import load_archetype
 from model import STMNet
 from make_ensemble import conformal_q, predict, _erfinv, K, CENSOR, SIG_FLOOR
-from figstyle import panel
+from figstyle import panel, legend_below
 
 ARCHS = [
     ("deepBeam",        "Deep beam",         "#2B63A6"),
@@ -40,10 +40,6 @@ ARCHS = [
 PNG = "../figures/calibration.pdf"
 TEX = "../figures/calibration.tex"
 
-plt.rcParams.update({
-    "font.family": "serif", "font.size": 9,
-    "axes.linewidth": 0.9, "savefig.dpi": 600, "pdf.fonttype": 42, "mathtext.fontset": "cm",
-})
 
 
 def load_ensemble(arch: str, theta_dim: int, n_members: int, cfg):
@@ -80,7 +76,8 @@ def main() -> None:
     res = {a: archetype_data(a) for a, _, _ in ARCHS}
 
     # ---- 2x2 per-archetype reliability diagrams --------------------------
-    fig, axes = plt.subplots(1, 4, figsize=(14, 4.0))
+    fig, axes = plt.subplots(2, 2, figsize=(7.0, 4.9), sharex=True, sharey=True,
+                             gridspec_kw={"hspace": 0.32, "wspace": 0.12})
     levels = np.linspace(0.10, 0.95, 28)
     for i, (ax, (arch, label, colour)) in enumerate(zip(axes.ravel(), ARCHS)):
         r = res[arch]
@@ -90,10 +87,10 @@ def main() -> None:
         conf = np.array([float(np.mean(err <= conformal_q(r["cal_scores"], p)
                                        * r["test_std"])) for p in levels])
         ax.plot([0, 1], [0, 1], ls="--", lw=1.0, color="0.45")
-        ax.plot(levels, raw, "-", color="#B8352B", lw=1.5,
-                label="raw ensemble $\\sigma$")
-        ax.plot(levels, conf, "-", color="0.15", lw=1.8,
-                label="conformal")
+        h_raw, = ax.plot(levels, raw, "-", color="#B8352B", lw=1.5,
+                         label="raw ensemble $\\sigma$")
+        h_conf, = ax.plot(levels, conf, "-", color="0.15", lw=1.8,
+                          label="conformal")
         ax.set_xlim(0, 1)
         ax.set_ylim(0, 1)
         ax.set_aspect("equal")
@@ -102,13 +99,11 @@ def main() -> None:
             ax.spines[sp].set_visible(False)
         ax.grid(True, lw=0.4, color="0.90")
         ax.set_axisbelow(True)
-        ax.set_xlabel("Target coverage", fontsize=8.5)
-        ax.set_ylabel("Observed coverage" if i == 0 else "", fontsize=8.5)
-        if arch == "deepBeam":
-            leg = ax.legend(loc="lower right", fontsize=7.2, frameon=True)
-            leg.get_frame().set_edgecolor("0.80")
-            leg.get_frame().set_linewidth(0.6)
+        ax.set_xlabel("Target coverage" if i >= 2 else "", fontsize=9)
+        ax.set_ylabel("Observed coverage" if i % 2 == 0 else "", fontsize=9)
     fig.tight_layout()
+    fig.subplots_adjust(bottom=0.18)
+    legend_below(fig, [h_raw, h_conf], ["Raw ensemble spread", "Conformal interval"], ncol=2, y=0.005)
     fig.savefig(PNG, bbox_inches="tight")
     plt.close(fig)
     print(f"wrote {PNG}")

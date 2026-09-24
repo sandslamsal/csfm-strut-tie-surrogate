@@ -32,7 +32,7 @@ import torch
 from config import get_config
 from data import load_archetype
 from model import STMNet
-from figstyle import panel
+from figstyle import panel, legend_below
 
 DATA = "../validation/piercaps_geevar_menon_2018.json"
 SPECS = ["S1", "S2", "S3", "S4", "S5"]
@@ -47,11 +47,6 @@ C_CONT = "#D9761A"   # continuum CSFM, Kaufmann et al. (orange)
 C_SURR = "#7850A8"   # neural surrogate (purple)
 C_SAFE = "#2C8754"   # conservative-region green
 
-plt.rcParams.update({
-    "font.family": "serif", "font.size": 10,
-    "axes.linewidth": 0.9, "savefig.dpi": 600, "pdf.fonttype": 42,
-    "mathtext.fontset": "cm",
-})
 
 
 def _modern(ax) -> None:
@@ -68,21 +63,23 @@ def combined_figure(path: str, measured, series) -> None:
     """series: list of (label, 5 values, colour, marker)."""
     meas = np.asarray(measured, float)
     fig, (axp, axr) = plt.subplots(
-        1, 2, figsize=(8.8, 3.9),
-        gridspec_kw={"width_ratios": [1.5, 0.9], "wspace": 0.30})
+        1, 2, figsize=(7.0, 3.3),
+        gridspec_kw={"width_ratios": [1.5, 0.9], "wspace": 0.36})
 
     hi = max(meas.max(), max(np.asarray(v).max() for _, v, _, _ in series)) * 1.10
 
     # ---------- panel (a): parity, three predictions ----------
     axp.plot([0, hi], [0, hi], ls="--", color="0.45", lw=1.2, zorder=2)
-    axp.text(hi * 0.985, hi * 0.955, "1:1", color="0.45", fontsize=8.5,
+    axp.text(hi * 0.985, hi * 0.955, "1:1", color="0.45", fontsize=9,
              ha="right", va="top", rotation=45)
 
     means = []
+    handles = []
     for label, vals, colour, marker in series:
         vals = np.asarray(vals, float)
-        axp.scatter(meas, vals, s=66, color=colour, edgecolor="white",
-                    linewidth=1.0, marker=marker, zorder=5, label=label)
+        h = axp.scatter(meas, vals, s=66, color=colour, edgecolor="white",
+                        linewidth=1.0, marker=marker, zorder=5, label=label)
+        handles.append(h)
         means.append((label, float(np.mean(meas / vals))))
 
     axp.set_xlim(0, hi)
@@ -91,24 +88,20 @@ def combined_figure(path: str, measured, series) -> None:
     axp.set_xlabel("Measured load $P$ (kN)", fontsize=10)
     axp.set_ylabel("Predicted load $P$ (kN)", fontsize=10)
     _modern(axp)
-    leg = axp.legend(loc="upper left", frameon=True, fontsize=8.0,
-                     handletextpad=0.3, borderpad=0.5, labelspacing=0.3)
-    leg.get_frame().set_edgecolor("0.8")
-    leg.get_frame().set_linewidth(0.6)
     # compact mean-ratio annotation (no per-point labels; see tables)
-    txt = "mean $P_{exp}/P_{pred}$\n" + "\n".join(
+    txt = "Mean $P_{exp}/P_{pred}$\n" + "\n".join(
         f"{lab.split(' (')[0]}: {m:.2f}" for lab, m in means)
-    axp.text(0.97, 0.05, txt, transform=axp.transAxes, fontsize=7.4,
-             ha="right", va="bottom", color="0.25",
+    axp.text(0.03, 0.97, txt, transform=axp.transAxes, fontsize=8,
+             ha="left", va="top", color="0.25",
              bbox=dict(boxstyle="round,pad=0.32", facecolor="white",
                        edgecolor="0.82", linewidth=0.6))
-    panel(axp, "a", "Predicted against measured load")
+    panel(axp, "a", "Predicted against measured")
 
     # ---------- panel (b): compact ratio strip ----------
     y = np.arange(len(SPECS))[::-1]
     axr.axvline(1.0, color="0.45", lw=1.2, zorder=1)
-    axr.text(1.0, len(SPECS) - 0.35, "measured", color="0.45", fontsize=7.4,
-             ha="center", va="bottom")
+    axr.text(1.0, -0.75, "Measured", color="0.45", fontsize=8,
+             ha="center", va="top")
     n = len(series)
     for j, (label, vals, colour, marker) in enumerate(series):
         ratio = meas / np.asarray(vals, float)
@@ -116,16 +109,18 @@ def combined_figure(path: str, measured, series) -> None:
         axr.scatter(ratio, y + off, s=34, color=colour, edgecolor="white",
                     linewidth=0.7, marker=marker, zorder=5)
     axr.set_yticks(y)
-    axr.set_yticklabels(SPECS, fontsize=9.5)
+    axr.set_yticklabels(SPECS, fontsize=10)
     for tick in axr.get_yticklabels():
         if tick.get_text() in RUPTURE:
             tick.set_color(C_SOLV)
             tick.set_fontweight("bold")
-    axr.set_ylim(-0.6, len(SPECS) - 0.4)
+    axr.set_ylim(-1.0, len(SPECS) - 0.4)
     axr.set_xlabel("$P_{exp}/P_{pred}$", fontsize=10)
     _modern(axr)
     panel(axr, "b", "Ratio per specimen")
 
+    fig.subplots_adjust(bottom=0.26)
+    legend_below(fig, handles, [h.get_label() for h in handles], ncol=3, y=0.005)
     fig.savefig(path, bbox_inches="tight")
     plt.close(fig)
     print(f"wrote {path}")

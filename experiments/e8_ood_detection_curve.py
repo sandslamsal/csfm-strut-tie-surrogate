@@ -83,39 +83,54 @@ for arch in ARCHS:
                       f"prec {100*row['alarm'][a]['precision_harmful']:.0f}%]" for a in ALARMS))
 dump("e8_ood_detection_curve.json", res)
 
-# ---- figure: (a) flag rate vs delta at 5 % alarm, (b) recall of harmful errors vs alarm rate
+# ---- figure: (a) flag rate vs delta, (b) recall of harmful errors vs alarm rate
 from figstyle import MARKER, tidy, panel, legend_below, INK2
-fig, (a1, a2) = plt.subplots(1, 2, figsize=(8.8, 3.6), gridspec_kw={"wspace": 0.34})
-handles = []
+fig, (a1, a2) = plt.subplots(1, 2, figsize=(7.0, 3.5), gridspec_kw={"wspace": 0.45})
+handles, labels, ends = [], [], []
 for arch in ARCHS:
     r = res[arch]
     xs = [0.0] + DELTAS
     ys = [5.0] + [100 * r["shells"][d]["alarm"][5]["flag_rate"] for d in DELTAS]
-    h, = a1.plot(xs, ys, "-", marker=MARKER[arch], color=COLOUR[arch], lw=1.6, ms=5,
-                 markeredgecolor="white", markeredgewidth=0.7, label=LABEL[arch], zorder=3)
+    h, = a1.plot(xs, ys, "-", marker=MARKER[arch], color=COLOUR[arch], lw=1.7, ms=5.2,
+                 markeredgecolor="white", markeredgewidth=0.8, zorder=3)
+    a1.annotate(f"{ys[-1]:.0f}%", (0.3, ys[-1]), xytext=(6, 0), textcoords="offset points",
+                fontsize=8, color=COLOUR[arch], va="center")
     handles.append(h)
+    labels.append(f"{LABEL[arch]} (AUROC {r['shells'][0.3]['auroc']:.2f})")
     ys2 = [100 * r["shells"][0.3]["alarm"][a]["recall_harmful"] for a in ALARMS]
-    a2.plot(ALARMS, ys2, "-", marker=MARKER[arch], color=COLOUR[arch], lw=1.6, ms=5,
-            markeredgecolor="white", markeredgewidth=0.7, zorder=3)
+    a2.plot(ALARMS, ys2, "-", marker=MARKER[arch], color=COLOUR[arch], lw=1.7, ms=5.2,
+            markeredgecolor="white", markeredgewidth=0.8, zorder=3)
+    ends.append((ys2[-1], arch))
+# end labels of (b), pushed apart to at least 5 points of separation
+ends.sort()
+ypos = [v for v, _ in ends]
+for k in range(1, len(ypos)):
+    ypos[k] = max(ypos[k], ypos[k - 1] + 5.0)
+for (v, arch), y in zip(ends, ypos):
+    a2.annotate(f"{v:.0f}%", (20, v), xytext=(20.8, y), textcoords="data", fontsize=8,
+                color=COLOUR[arch], va="center", ha="left")
 a1.axhline(5, ls="--", lw=0.9, color=INK2, zorder=2)
-a1.text(0.305, 7.5, "in-domain alarm rate 5%", fontsize=7, color=INK2, ha="right")
+a1.text(0.335, 8.5, "5% in-domain alarm rate", fontsize=8, color=INK2, ha="right")
 a1.set_xlabel("Distance outside the training box, $\\delta$")
-a1.set_ylabel("Designs flagged (%)")
-a1.set_xlim(-0.01, 0.31); a1.set_ylim(0, 100)
+a1.set_ylabel("Out-of-domain designs flagged (%)")
+a1.set_xlim(-0.01, 0.345); a1.set_ylim(0, 100)
 a1.set_xticks([0, 0.1, 0.2, 0.3])
-panel(a1, "a", "Flag rate at a 5% in-domain alarm rate")
+panel(a1, "a", "Flag rate against distance")
+a2.axvspan(4.6, 5.4, color=INK2, alpha=0.08, lw=0, zorder=0)
+a2.text(5, 96, "Reported\nsetting", fontsize=8, color=INK2, ha="center", va="top")
 a2.set_xscale("log")
 a2.set_xticks(ALARMS); a2.set_xticklabels([str(a) for a in ALARMS])
 a2.minorticks_off()
+a2.set_xlim(0.85, 27)
 a2.set_xlabel("In-domain alarm rate (%)")
 a2.set_ylabel("Harmful-error designs caught (%)")
 a2.set_ylim(0, 100)
-panel(a2, "b", "Recall of harmful errors at $\\delta = 0.3$")
+panel(a2, "b", "Harmful errors caught, $\\delta = 0.3$")
 for ax in (a1, a2):
     tidy(ax)
 fig.tight_layout(w_pad=2.5)
-fig.subplots_adjust(bottom=0.30)
-legend_below(fig, handles, [LABEL[a] for a in ARCHS], ncol=4, y=0.02)
+fig.subplots_adjust(bottom=0.24)
+legend_below(fig, handles, labels, ncol=4, y=0.005)
 FIG_DIR.mkdir(parents=True, exist_ok=True)
 fig.savefig(FIG_DIR / "ood_detection.pdf", bbox_inches="tight")
 log(f"wrote {FIG_DIR / 'ood_detection.pdf'}")
