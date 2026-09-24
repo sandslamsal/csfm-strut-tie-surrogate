@@ -137,7 +137,7 @@ def main() -> None:
 
     from figstyle import COLOUR, MARKER, LABEL, ORDER, tidy, panel, legend_below, INK2
     # (b) needs the width sweep of experiment E6
-    for cand in ("../revision1/experiments/e6_width_sweep.json", "../experiments/e6_width_sweep.json"):
+    for cand in ("../experiments/e6_width_sweep.json",):
         if os.path.exists(cand):
             width = json.load(open(cand))
             break
