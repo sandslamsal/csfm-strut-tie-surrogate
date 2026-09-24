@@ -1,0 +1,28 @@
+=== headline models: train vs test ===
+deepBeam         params  85130  train MAPE  2.78% R2 0.997  |  test MAPE  5.55% R2 0.964  (n_train 525, n_test 113)
+hammerhead       params  87838  train MAPE  1.53% R2 0.999  |  test MAPE  4.32% R2 0.983  (n_train 378, n_test 81)
+multiColumnBent  params  88226  train MAPE  1.56% R2 0.998  |  test MAPE  2.88% R2 0.994  (n_train 525, n_test 113)
+pileCap          params  85001  train MAPE  1.91% R2 0.996  |  test MAPE  4.87% R2 0.957  (n_train 525, n_test 113)
+
+=== width sweep (3 seeds) ===
+deepBeam         width  16 params   1690  train MAPE  6.93%  test MAPE  9.60±0.54%  test R2 0.921  forceR2 0.986
+deepBeam         width  32 params   5930  train MAPE  4.56%  test MAPE  7.27±0.59%  test R2 0.944  forceR2 0.991
+deepBeam         width  64 params  22090  train MAPE  3.55%  test MAPE  6.01±0.34%  test R2 0.956  forceR2 0.993
+deepBeam         width 128 params  85130  train MAPE  2.18%  test MAPE  5.40±0.33%  test R2 0.964  forceR2 0.994
+deepBeam         width 256 params 334090  train MAPE  2.59%  test MAPE  5.63±0.26%  test R2 0.960  forceR2 0.992
+hammerhead       width  16 params   2046  train MAPE  4.99%  test MAPE  7.50±0.58%  test R2 0.966  forceR2 0.986
+hammerhead       width  32 params   6622  train MAPE  3.17%  test MAPE  6.28±0.77%  test R2 0.971  forceR2 0.992
+hammerhead       width  64 params  23454  train MAPE  2.18%  test MAPE  5.08±0.43%  test R2 0.978  forceR2 0.995
+hammerhead       width 128 params  87838  train MAPE  1.61%  test MAPE  4.34±0.38%  test R2 0.982  forceR2 0.996
+hammerhead       width 256 params 339486  train MAPE  1.74%  test MAPE  4.17±0.48%  test R2 0.983  forceR2 0.997
+multiColumnBent  width  16 params   2098  train MAPE  2.94%  test MAPE  4.32±0.35%  test R2 0.987  forceR2 0.995
+multiColumnBent  width  32 params   6722  train MAPE  2.25%  test MAPE  3.44±0.35%  test R2 0.991  forceR2 0.997
+multiColumnBent  width  64 params  23650  train MAPE  1.81%  test MAPE  3.23±0.22%  test R2 0.991  forceR2 0.997
+multiColumnBent  width 128 params  88226  train MAPE  1.59%  test MAPE  3.08±0.18%  test R2 0.993  forceR2 0.997
+multiColumnBent  width 256 params 340258  train MAPE  1.05%  test MAPE  2.70±0.11%  test R2 0.993  forceR2 0.998
+pileCap          width  16 params   1673  train MAPE  5.54%  test MAPE  7.68±0.34%  test R2 0.914  forceR2 0.976
+pileCap          width  32 params   5897  train MAPE  4.58%  test MAPE  6.87±0.29%  test R2 0.936  forceR2 0.989
+pileCap          width  64 params  22025  train MAPE  3.65%  test MAPE  6.10±0.53%  test R2 0.939  forceR2 0.991
+pileCap          width 128 params  85001  train MAPE  2.35%  test MAPE  5.35±0.35%  test R2 0.951  forceR2 0.995
+pileCap          width 256 params 333833  train MAPE  2.15%  test MAPE  5.27±0.37%  test R2 0.952  forceR2 0.995
+[elapsed 226 s]

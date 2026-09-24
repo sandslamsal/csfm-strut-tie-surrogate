@@ -1,0 +1,209 @@
+E4 -- reference solver vs Li et al. (2022) deep beams
+geometry 2200x200x900 mm, l0 = 1800 mm, fc = 42.9 MPa, tie fy = 653.7 MPa
+
+spec  a/h0  rho_s  rho_sv P_exp   P_calc  exp/calc mode (solver)         mode (test)         
+LDB1  0.3   1.05   0.33   1169    2806    0.42     Concrete crushing in strut D0 (effective compressive strength reached).strut crushing      
+LDB2  0.6   1.05   0.33   1000    2250    0.44     Concrete crushing in strut D0 (effective compressive strength reached).strut crushing      
+LDB3  0.9   1.05   0.33   943     1839    0.51     Concrete crushing in strut D0 (effective compressive strength reached).strut crushing      
+LDB4  0.6   0.67   0.33   823     2016    0.41     Concrete crushing in strut D0 (effective compressive strength reached).strut crushing      
+LDB5  0.6   1.27   0.33   1194    2327    0.51     Concrete crushing in strut D0 (effective compressive strength reached).strut crushing      
+LDB6  0.6   1.05   0.50   1024    2253    0.45     Concrete crushing in strut D0 (effective compressive strength reached).strut crushing      
+LDB7  0.6   1.05   0.25   950     2233    0.43     Concrete crushing in strut D0 (effective compressive strength reached).strut crushing      
+LDB8  0.6   1.05   0.00   940     2256    0.42     Concrete crushing in strut D0 (effective compressive strength reached).diagonal splitting  
+
+exp/calc  mean 0.45  CoV 0.09  (n = 8)
+capacity rise LDB4 -> LDB5: measured 45%, solver 15%
+
+diagnostic: governing strut D0
+spec     w(mm)    A(mm2)   F_D0(kN) sig_solv sig_test theta    w_node   P_node   exp/node 
+LDB1     200      40000    1496     37.4     15.6     70       140      2046     0.57     
+LDB2     200      40000    1367     34.2     15.2     55       171      2000     0.50     
+LDB3     200      40000    1306     32.6     16.7     45       188      1745     0.54     
+LDB4     200      40000    1225     30.6     12.5     55       171      1811     0.45     
+LDB5     200      40000    1414     35.3     18.1     55       171      2089     0.57     
+LDB6     200      40000    1368     34.2     15.5     55       171      1997     0.51     
+LDB7     200      40000    1356     33.9     14.4     55       171      1995     0.48     
+LDB8     200      40000    1370     34.3     14.3     55       171      2021     0.47     
+eta_fc (30/fc)^(1/3) = 0.888; eta_fc * fc = 38.1 MPa
+{
+ "mean": 0.4489574297704997,
+ "cov": 0.08806927572787264,
+ "rows": [
+  {
+   "id": "LDB1",
+   "lam": 0.3,
+   "rho_s": 0.0105,
+   "rho_sv": 0.0033,
+   "Pu": 1169,
+   "Pcalc": 2805.6,
+   "ratio": 0.4166666666666667,
+   "mode": "Concrete crushing in strut D0 (effective compressive strength reached).",
+   "testMode": "strut crushing",
+   "nodes": 8,
+   "members": 13,
+   "strutWidth": 200,
+   "strutArea": 40000,
+   "strutForceAtFailure_kN": 1496.3199607870927,
+   "strutStressSolver_MPa": 37.40799901967731,
+   "strutStressImpliedByTest_MPa": 15.58666625819888,
+   "thetaDeg": 69.63586923886041,
+   "wNode": 139.7252503721985,
+   "PcalcNodeLimited": 2045.75,
+   "ratioNodeLimited": 0.5714285714285714
+  },
+  {
+   "id": "LDB2",
+   "lam": 0.6,
+   "rho_s": 0.0105,
+   "rho_sv": 0.0033,
+   "Pu": 1000,
+   "Pcalc": 2250,
+   "ratio": 0.4444444444444444,
+   "mode": "Concrete crushing in strut D0 (effective compressive strength reached).",
+   "testMode": "strut crushing",
+   "nodes": 8,
+   "members": 13,
+   "strutWidth": 200,
+   "strutArea": 40000,
+   "strutForceAtFailure_kN": 1366.649014354682,
+   "strutStressSolver_MPa": 34.16622535886705,
+   "strutStressImpliedByTest_MPa": 15.184989048385356,
+   "thetaDeg": 55.404540349416074,
+   "wNode": 171.46131285300982,
+   "PcalcNodeLimited": 2000,
+   "ratioNodeLimited": 0.5
+  },
+  {
+   "id": "LDB3",
+   "lam": 0.9,
+   "rho_s": 0.0105,
+   "rho_sv": 0.0033,
+   "Pu": 943,
+   "Pcalc": 1838.85,
+   "ratio": 0.5128205128205129,
+   "mode": "Concrete crushing in strut D0 (effective compressive strength reached).",
+   "testMode": "strut crushing",
+   "nodes": 8,
+   "members": 13,
+   "strutWidth": 200,
+   "strutArea": 40000,
+   "strutForceAtFailure_kN": 1305.6636761709026,
+   "strutStressSolver_MPa": 32.641591904272566,
+   "strutStressImpliedByTest_MPa": 16.73927789962696,
+   "thetaDeg": 44.76350562733171,
+   "wNode": 188.3981783877356,
+   "PcalcNodeLimited": 1744.5500000000002,
+   "ratioNodeLimited": 0.5405405405405405
+  },
+  {
+   "id": "LDB4",
+   "lam": 0.6,
+   "rho_s": 0.0067,
+   "rho_sv": 0.0033,
+   "Pu": 823,
+   "Pcalc": 2016.3500000000001,
+   "ratio": 0.4081632653061224,
+   "mode": "Concrete crushing in strut D0 (effective compressive strength reached).",
+   "testMode": "strut crushing",
+   "nodes": 8,
+   "members": 13,
+   "strutWidth": 200,
+   "strutArea": 40000,
+   "strutForceAtFailure_kN": 1224.7301067084732,
+   "strutStressSolver_MPa": 30.618252667711825,
+   "strutStressImpliedByTest_MPa": 12.497245986821152,
+   "thetaDeg": 55.404540349416074,
+   "wNode": 171.46131285300982,
+   "PcalcNodeLimited": 1810.6000000000001,
+   "ratioNodeLimited": 0.45454545454545453
+  },
+  {
+   "id": "LDB5",
+   "lam": 0.6,
+   "rho_s": 0.0127,
+   "rho_sv": 0.0033,
+   "Pu": 1193.5,
+   "Pcalc": 2327.325,
+   "ratio": 0.5128205128205129,
+   "mode": "Concrete crushing in strut D0 (effective compressive strength reached).",
+   "testMode": "strut crushing",
+   "nodes": 8,
+   "members": 13,
+   "strutWidth": 200,
+   "strutArea": 40000,
+   "strutForceAtFailure_kN": 1413.616185481341,
+   "strutStressSolver_MPa": 35.34040463703353,
+   "strutStressImpliedByTest_MPa": 18.123284429247967,
+   "thetaDeg": 55.404540349416074,
+   "wNode": 171.46131285300982,
+   "PcalcNodeLimited": 2088.625,
+   "ratioNodeLimited": 0.5714285714285714
+  },
+  {
+   "id": "LDB6",
+   "lam": 0.6,
+   "rho_s": 0.0105,
+   "rho_sv": 0.005,
+   "Pu": 1024,
+   "Pcalc": 2252.8,
+   "ratio": 0.45454545454545453,
+   "mode": "Concrete crushing in strut D0 (effective compressive strength reached).",
+   "testMode": "strut crushing",
+   "nodes": 8,
+   "members": 13,
+   "strutWidth": 200,
+   "strutArea": 40000,
+   "strutForceAtFailure_kN": 1368.3497331281053,
+   "strutStressSolver_MPa": 34.20874332820263,
+   "strutStressImpliedByTest_MPa": 15.549428785546649,
+   "thetaDeg": 55.404540349416074,
+   "wNode": 171.46131285300982,
+   "PcalcNodeLimited": 1996.8,
+   "ratioNodeLimited": 0.5128205128205129
+  },
+  {
+   "id": "LDB7",
+   "lam": 0.6,
+   "rho_s": 0.0105,
+   "rho_sv": 0.0025,
+   "Pu": 950,
+   "Pcalc": 2232.5,
+   "ratio": 0.425531914893617,
+   "mode": "Concrete crushing in strut D0 (effective compressive strength reached).",
+   "testMode": "strut crushing",
+   "nodes": 8,
+   "members": 13,
+   "strutWidth": 200,
+   "strutArea": 40000,
+   "strutForceAtFailure_kN": 1356.0195220208159,
+   "strutStressSolver_MPa": 33.900488050520394,
+   "strutStressImpliedByTest_MPa": 14.425739595966125,
+   "thetaDeg": 55.404540349416074,
+   "wNode": 171.46131285300982,
+   "PcalcNodeLimited": 1995,
+   "ratioNodeLimited": 0.47619047619047616
+  },
+  {
+   "id": "LDB8",
+   "lam": 0.6,
+   "rho_s": 0.0105,
+   "rho_sv": 0,
+   "Pu": 940,
+   "Pcalc": 2256,
+   "ratio": 0.4166666666666667,
+   "mode": "Concrete crushing in strut D0 (effective compressive strength reached).",
+   "testMode": "diagonal splitting",
+   "nodes": 8,
+   "members": 13,
+   "strutWidth": 200,
+   "strutArea": 40000,
+   "strutForceAtFailure_kN": 1370.293411726295,
+   "strutStressSolver_MPa": 34.257335293157375,
+   "strutStressImpliedByTest_MPa": 14.27388970548224,
+   "thetaDeg": 55.404540349416074,
+   "wNode": 171.46131285300982,
+   "PcalcNodeLimited": 2021,
+   "ratioNodeLimited": 0.46511627906976744
+  }
+ ]
+}

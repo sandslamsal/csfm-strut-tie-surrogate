@@ -1,0 +1,5 @@
+# Python dependencies of the surrogate
+# Install:  python -m venv .venv && source .venv/bin/activate
+#           pip install -r requirements.txt
+torch>=2.2
+numpy>=1.24

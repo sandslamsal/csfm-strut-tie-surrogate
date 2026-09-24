@@ -1,0 +1,25 @@
+
+=== deepBeam: 9 members, cal 81, test 92 ===
+failure load : q90 2.14  coverage 0.848
+member forces: q90 1.30  pooled coverage 0.873  (per member 0.70-1.00; per-member calibration 0.886)
+               half-width mean 0.029 F0, median 251.7% of |F|;  spread/error rank corr 0.79
+simultaneous (all 9 members, Bonferroni): q 3.10  coverage 0.935
+
+=== hammerhead: 29 members, cal 67, test 74 ===
+failure load : q90 2.58  coverage 0.932
+member forces: q90 1.85  pooled coverage 0.884  (per member 0.77-1.00; per-member calibration 0.911)
+               half-width mean 0.052 F0, median 11.3% of |F|;  spread/error rank corr 0.75
+simultaneous (all 29 members, Bonferroni): q 4.08  coverage 0.946
+
+=== multiColumnBent: 33 members, cal 81, test 77 ===
+failure load : q90 1.97  coverage 0.857
+member forces: q90 2.86  pooled coverage 0.898  (per member 0.57-1.00; per-member calibration 0.918)
+               half-width mean 0.045 F0, median 12.1% of |F|;  spread/error rank corr 0.66
+simultaneous (all 33 members, Bonferroni): q 15.22  coverage 0.987
+
+=== pileCap: 8 members, cal 94, test 91 ===
+failure load : q90 2.76  coverage 0.945
+member forces: q90 2.58  pooled coverage 0.931  (per member 0.89-0.98; per-member calibration 0.942)
+               half-width mean 0.068 F0, median 12.8% of |F|;  spread/error rank corr 0.48
+simultaneous (all 8 members, Bonferroni): q 4.40  coverage 1.000
+[elapsed 3 s]

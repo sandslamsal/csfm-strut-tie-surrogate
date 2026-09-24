@@ -1,0 +1,41 @@
+
+=== deepBeam: non-failing designs train/val/test = 115/31/21 of 525/112/113 ===
+  plain seed0: MAPE   5.55%  R2 0.964  forceR2 0.994  forceRel   6.9%  eq  1.80%  cls 0.894 fp 12 fn  0  hinge 0.061
+  plain seed1: MAPE   5.70%  R2 0.961  forceR2 0.993  forceRel   6.8%  eq  1.30%  cls 0.876 fp 14 fn  0  hinge 0.043
+  plain seed2: MAPE   4.94%  R2 0.969  forceR2 0.994  forceRel   5.6%  eq  1.25%  cls 0.894 fp 12 fn  0  hinge 0.040
+  plain mean : MAPE 5.40%  R2 0.964  cls 0.888  fp 12.7  fn 0.0  shortfall 0.048
+  hinge seed0: MAPE   5.21%  R2 0.962  forceR2 0.996  forceRel   5.0%  eq  1.32%  cls 0.965 fp  2 fn  2  hinge 0.020
+  hinge seed1: MAPE   5.55%  R2 0.960  forceR2 0.995  forceRel   6.3%  eq  1.48%  cls 0.965 fp  2 fn  2  hinge 0.019
+  hinge seed2: MAPE   4.96%  R2 0.968  forceR2 0.996  forceRel   5.2%  eq  1.42%  cls 0.973 fp  2 fn  1  hinge 0.017
+  hinge mean : MAPE 5.24%  R2 0.963  cls 0.968  fp 2.0  fn 1.7  shortfall 0.019
+
+=== hammerhead: non-failing designs train/val/test = 64/14/7 of 378/81/81 ===
+  plain seed0: MAPE   4.32%  R2 0.983  forceR2 0.996  forceRel   5.9%  eq  1.62%  cls 0.951 fp  4 fn  0  hinge 0.047
+  plain seed1: MAPE   4.82%  R2 0.978  forceR2 0.996  forceRel   6.8%  eq  1.71%  cls 0.938 fp  5 fn  0  hinge 0.065
+  plain seed2: MAPE   3.88%  R2 0.984  forceR2 0.997  forceRel   5.4%  eq  1.67%  cls 0.951 fp  4 fn  0  hinge 0.054
+  plain mean : MAPE 4.34%  R2 0.982  cls 0.947  fp 4.3  fn 0.0  shortfall 0.055
+  hinge seed0: MAPE   4.44%  R2 0.983  forceR2 0.996  forceRel   6.1%  eq  1.67%  cls 0.988 fp  1 fn  0  hinge 0.001
+  hinge seed1: MAPE   4.30%  R2 0.982  forceR2 0.996  forceRel   6.4%  eq  1.59%  cls 0.988 fp  1 fn  0  hinge 0.003
+  hinge seed2: MAPE   3.62%  R2 0.987  forceR2 0.997  forceRel   5.2%  eq  1.63%  cls 1.000 fp  0 fn  0  hinge 0.000
+  hinge mean : MAPE 4.12%  R2 0.984  cls 0.992  fp 0.7  fn 0.0  shortfall 0.001
+
+=== multiColumnBent: non-failing designs train/val/test = 148/31/36 of 525/112/113 ===
+  plain seed0: MAPE   2.88%  R2 0.994  forceR2 0.997  forceRel   5.8%  eq  1.17%  cls 0.912 fp 10 fn  0  hinge 0.005
+  plain seed1: MAPE   3.04%  R2 0.993  forceR2 0.998  forceRel   4.9%  eq  1.04%  cls 0.858 fp 16 fn  0  hinge 0.008
+  plain seed2: MAPE   3.32%  R2 0.991  forceR2 0.997  forceRel   5.8%  eq  1.01%  cls 0.903 fp 11 fn  0  hinge 0.013
+  plain mean : MAPE 3.08%  R2 0.993  cls 0.891  fp 12.3  fn 0.0  shortfall 0.008
+  hinge seed0: MAPE   2.80%  R2 0.993  forceR2 0.997  forceRel   5.3%  eq  1.00%  cls 1.000 fp  0 fn  0  hinge 0.000
+  hinge seed1: MAPE   2.84%  R2 0.994  forceR2 0.998  forceRel   4.6%  eq  0.96%  cls 1.000 fp  0 fn  0  hinge 0.000
+  hinge seed2: MAPE   3.02%  R2 0.992  forceR2 0.997  forceRel   5.3%  eq  0.96%  cls 1.000 fp  0 fn  0  hinge 0.000
+  hinge mean : MAPE 2.89%  R2 0.993  cls 1.000  fp 0.0  fn 0.0  shortfall 0.000
+
+=== pileCap: non-failing designs train/val/test = 128/18/22 of 525/112/113 ===
+  plain seed0: MAPE   4.87%  R2 0.957  forceR2 0.995  forceRel   5.8%  eq  1.75%  cls 0.912 fp 10 fn  0  hinge 0.018
+  plain seed1: MAPE   5.56%  R2 0.946  forceR2 0.994  forceRel   7.0%  eq  1.91%  cls 0.867 fp 15 fn  0  hinge 0.031
+  plain seed2: MAPE   5.63%  R2 0.949  forceR2 0.994  forceRel   6.7%  eq  1.88%  cls 0.920 fp  9 fn  0  hinge 0.021
+  plain mean : MAPE 5.35%  R2 0.951  cls 0.900  fp 11.3  fn 0.0  shortfall 0.023
+  hinge seed0: MAPE   4.50%  R2 0.966  forceR2 0.996  forceRel   5.6%  eq  2.16%  cls 0.991 fp  1 fn  0  hinge 0.003
+  hinge seed1: MAPE   5.19%  R2 0.957  forceR2 0.995  forceRel   6.5%  eq  2.15%  cls 1.000 fp  0 fn  0  hinge 0.000
+  hinge seed2: MAPE   4.64%  R2 0.964  forceR2 0.996  forceRel   5.6%  eq  1.73%  cls 0.982 fp  2 fn  0  hinge 0.003
+  hinge mean : MAPE 4.77%  R2 0.962  cls 0.991  fp 1.0  fn 0.0  shortfall 0.002
+[elapsed 99 s]

@@ -1,0 +1,14 @@
+solver sweep: 750 designs in 1.2 s (1.56 ms per design)
+deepBeam2P: nodes 8, members 13, train/val/test 525/112/113, non-failing in test 49
+full data, from scratch: MAPE 5.06% R2 0.958 forceR2 0.995 eq 1.52%  (training 4 s)
+scratch n= 52 ( 10%): MAPE 25.87±3.91%  R2 0.403
+scratch n=131 ( 25%): MAPE 12.89±0.76%  R2 0.798
+scratch n=262 ( 50%): MAPE  9.88±0.44%  R2 0.860
+scratch n=393 ( 75%): MAPE  7.01±0.53%  R2 0.928
+scratch n=525 (100%): MAPE  5.40±0.45%  R2 0.958
+warm    n= 52 ( 10%): MAPE 12.63±3.29%  R2 0.827
+warm    n=131 ( 25%): MAPE  6.91±0.83%  R2 0.933
+warm    n=262 ( 50%): MAPE  6.15±0.53%  R2 0.943
+warm    n=393 ( 75%): MAPE  5.00±0.24%  R2 0.965
+warm    n=525 (100%): MAPE  4.76±0.03%  R2 0.965
+[elapsed 60 s]

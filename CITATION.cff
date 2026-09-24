@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this software or dataset, please cite it as below."
+title: "CSFM Strut and Tie Surrogate: dataset-generation pipeline, dataset, trained models and evaluation code"
+authors:
+  - family-names: Lamsal
+    given-names: Sandesh
+    orcid: "https://orcid.org/0009-0007-9267-4019"
+    affiliation: "Department of Civil and Architectural Engineering, University of Miami"
+  - family-names: Bhandari
+    given-names: Rubi
+    orcid: "https://orcid.org/0009-0005-3650-4619"
+    affiliation: "Department of Civil and Environmental Engineering, Florida International University"
+license: MIT
+version: 1.0.0
+date-released: 2026-09-24
+repository-code: "https://github.com/sandslamsal/csfm-strut-tie-surrogate"
+keywords:
+  - Compatible Stress Field Method
+  - strut and tie model
+  - discontinuity regions
+  - neural-network surrogate
+  - conformal prediction

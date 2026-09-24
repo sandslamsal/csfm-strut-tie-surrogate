@@ -1,0 +1,171 @@
+{
+  "source": {
+    "campaign": "Concrete pier caps",
+    "experiment": "Geevar and Menon (2018)",
+    "reportedIn": "Kaufmann et al. (2020), Compatible Stress Field Design of Structural Concrete, Section 6.5, Tables 6.14, 6.15, 6.17",
+    "note": "Pier caps tested inverted: specimen stands on four vertical supports (load cells), a single vertical force applied at the top with zero eccentricity (specimens S1-S5). P_u in the test report is the MEAN of the four reaction forces, i.e. one quarter of the total applied load. 8 specimens were tested; only S1-S5 (constant geometry, no load eccentricity) were analysed with the CSFM."
+  },
+
+  "csfmSettings": {
+    "materialFormat": "mean measured properties, no safety factors (gamma = 1)",
+    "comment": "The repo solver's nonlinearCsfm.ts already runs at gamma = 1 (effectiveFcd(.,.,1.0), steel.fy direct), so the failureLoadFactor is a nominal prediction. Validation only requires feeding the mean material properties below.",
+    "steelEs_MPa": 200000,
+    "ultimateConcreteStrain_epsCu2": 0.0035,
+    "bookModelM0": "default CSFM: mesh 10, eps_cu2 = 3.5 permille, tension stiffening on (Tension Chord Model). M0 is the comparator used here."
+  },
+
+  "geometry": {
+    "status": "From Kaufmann et al. (2020): Fig. 6.22a (specimen geometry) and Fig. 6.23 (CSFM model of S1). Shared by S1-S5 (constant geometry). The total height 980 mm is cross-confirmed by Fig. 6.23, which gives the model height as 0.98 m.",
+    "sharedAcrossS1toS5": true,
+    "reportedFigureDimensions_mm": {
+      "topCapWidth": 1200,
+      "totalHeight": 980,
+      "heightBands": [160, 320, 500],
+      "heightBandRoles": ["cap (constant width)", "taper", "stem (constant width)"],
+      "lowerStemWidth": 640,
+      "dimension_a": 136,
+      "outOfPlaneThickness_b": 300,
+      "csfmModelSupportSpan": 1260
+    },
+    "shapeNotes": [
+      "The pier cap is a stepped shape: a 1200 mm wide cap at one end (160 mm constant band), a 320 mm tapered transition, and a 640 mm wide stem (500 mm constant band). Total height 980 mm, out-of-plane thickness 300 mm.",
+      "Structural action (D-region): a concentrated load over the loading plate l_b at the stem end spreads through the depth to four supports under the wide cap end — i.e. pile-cap action.",
+      "The repo's buildPileCap produces a rectangular cap with 2x2 piles. It captures the load-spread action but not the taper; the cap is modelled at the 1200 mm wide envelope. The CSFM book model is 2D plane stress; the repo solver is a 3D space truss."
+    ]
+  },
+
+  "specimens": [
+    {
+      "id": "S1",
+      "loadPlate_lb_mm": 130,
+      "reinforcement": {
+        "primary_As1": { "count": 9, "barDia_mm": 10 },
+        "additional_As2": null,
+        "rho_s_geo_pct": 0.32,
+        "distributedHorizontal_Ah": { "count": 4, "barDia_mm": 4, "spacing_sh_mm": 75 },
+        "rho_h_geo_pct": 0.13,
+        "distributedVertical_Av": "present but NOT modelled (works mainly in compression — book Section 6.5.3)"
+      },
+      "materials": {
+        "mainReinf": { "fy_MPa": 620, "ft_MPa": 670, "epsU_permille": 50 },
+        "distributedReinf": { "fy_MPa": 605, "ft_MPa": 653, "epsU_permille": 50 },
+        "concrete": { "fc_MPa": 31.2, "epsC0_permille": 2.0 }
+      },
+      "measured": {
+        "Pu_perSupport_kN": 556,
+        "Pu_total_kN": 2224,
+        "failureMode": "CC+FY (concrete crushing, preceded by slight yielding of main reinforcement)"
+      },
+      "bookCsfmPrediction_perSupport_kN": { "M0": 629, "M1": 610, "M2": 609, "M3": 568 },
+      "bookCsfmFailureMode": "CC (concrete crushing)",
+      "bookRatio_Pexp_over_Pcalc_M0": 0.88
+    },
+    {
+      "id": "S2",
+      "loadPlate_lb_mm": 145,
+      "reinforcement": {
+        "primary_As1": { "count": 13, "barDia_mm": 8 },
+        "additional_As2": null,
+        "rho_s_geo_pct": 0.29,
+        "distributedHorizontal_Ah": { "count": 6, "barDia_mm": 4, "spacing_sh_mm": 58 },
+        "rho_h_geo_pct": 0.26,
+        "distributedVertical_Av": "present but NOT modelled"
+      },
+      "materials": {
+        "mainReinf": { "fy_MPa": 631, "ft_MPa": 681, "epsU_permille": 50 },
+        "distributedReinf": { "fy_MPa": 605, "ft_MPa": 653, "epsU_permille": 50 },
+        "concrete": { "fc_MPa": 35.7, "epsC0_permille": 2.0 }
+      },
+      "measured": {
+        "Pu_perSupport_kN": 767,
+        "Pu_total_kN": 3068,
+        "failureMode": "CC+FY"
+      },
+      "bookCsfmPrediction_perSupport_kN": { "M0": 840, "M1": 846, "M2": 811, "M3": 765 },
+      "bookCsfmFailureMode": "CC",
+      "bookRatio_Pexp_over_Pcalc_M0": 0.91
+    },
+    {
+      "id": "S3",
+      "loadPlate_lb_mm": 145,
+      "reinforcement": {
+        "primary_As1": { "count": 13, "barDia_mm": 8 },
+        "additional_As2": { "count": 13, "barDia_mm": 8 },
+        "rho_s_geo_pct": 0.58,
+        "distributedHorizontal_Ah": { "count": 6, "barDia_mm": 4, "spacing_sh_mm": 58 },
+        "rho_h_geo_pct": 0.26,
+        "distributedVertical_Av": "present but NOT modelled"
+      },
+      "materials": {
+        "mainReinf": { "fy_MPa": 631, "ft_MPa": 681, "epsU_permille": 50 },
+        "distributedReinf": { "fy_MPa": 605, "ft_MPa": 653, "epsU_permille": 50 },
+        "concrete": { "fc_MPa": 30.1, "epsC0_permille": 2.0 }
+      },
+      "measured": {
+        "Pu_perSupport_kN": 859,
+        "Pu_total_kN": 3436,
+        "failureMode": "CC+FY"
+      },
+      "bookCsfmPrediction_perSupport_kN": { "M0": 763, "M1": 770, "M2": 738, "M3": 689 },
+      "bookCsfmFailureMode": "CC",
+      "bookRatio_Pexp_over_Pcalc_M0": 1.13
+    },
+    {
+      "id": "S4",
+      "loadPlate_lb_mm": 145,
+      "reinforcement": {
+        "primary_As1": { "count": 13, "barDia_mm": 8 },
+        "additional_As2": { "count": 13, "barDia_mm": 8 },
+        "rho_s_geo_pct": 0.58,
+        "distributedHorizontal_Ah": { "count": 4, "barDia_mm": 4, "spacing_sh_mm": 58 },
+        "rho_h_geo_pct": 0.17,
+        "distributedVertical_Av": "present but NOT modelled"
+      },
+      "materials": {
+        "mainReinf": { "fy_MPa": 631, "ft_MPa": 681, "epsU_permille": 50 },
+        "distributedReinf": { "fy_MPa": 605, "ft_MPa": 653, "epsU_permille": 50 },
+        "concrete": { "fc_MPa": 34.9, "epsC0_permille": 2.0 }
+      },
+      "measured": {
+        "Pu_perSupport_kN": 902,
+        "Pu_total_kN": 3608,
+        "failureMode": "CC+FY"
+      },
+      "bookCsfmPrediction_perSupport_kN": { "M0": 828, "M1": 831, "M2": 803, "M3": 758 },
+      "bookCsfmFailureMode": "CC",
+      "bookRatio_Pexp_over_Pcalc_M0": 1.09
+    },
+    {
+      "id": "S5",
+      "loadPlate_lb_mm": 170,
+      "reinforcement": {
+        "primary_As1": { "count": 13, "barDia_mm": 8 },
+        "additional_As2": { "count": 13, "barDia_mm": 8 },
+        "rho_s_geo_pct": 0.58,
+        "distributedHorizontal_Ah": { "count": 6, "barDia_mm": 4, "spacing_sh_mm": 58 },
+        "rho_h_geo_pct": 0.26,
+        "distributedVertical_Av": "present but NOT modelled"
+      },
+      "materials": {
+        "mainReinf": { "fy_MPa": 631, "ft_MPa": 681, "epsU_permille": 50 },
+        "distributedReinf": { "fy_MPa": 605, "ft_MPa": 653, "epsU_permille": 50 },
+        "concrete": { "fc_MPa": 34.1, "epsC0_permille": 2.0 }
+      },
+      "measured": {
+        "Pu_perSupport_kN": 866,
+        "Pu_total_kN": 3464,
+        "failureMode": "CC+FY"
+      },
+      "bookCsfmPrediction_perSupport_kN": { "M0": 1085, "M1": 1086, "M2": 1044, "M3": 1003 },
+      "bookCsfmFailureMode": "CC",
+      "bookRatio_Pexp_over_Pcalc_M0": 0.80,
+      "outlierFlag": "The book flags S5 as a likely abnormal experimental result: despite 50% more transverse reinforcement and a 20% larger loading plate than S4, its measured strength is lower. All CSFM models predict S5 unsafe. Treat S5 as a documented outlier."
+    }
+  ],
+
+  "bookM0Summary": {
+    "ratio_Pexp_over_Pcalc_mean": 0.96,
+    "ratio_Pexp_over_Pcalc_CoV": 0.13,
+    "conclusion": "CSFM (default M0) predicts ultimate load of these D-region pier caps with a mean experiment/prediction ratio of 0.96 and CoV 0.13. Strut-crushing failures are predicted less precisely than reinforcement-yielding failures (expected; design codes compensate with a higher concrete safety factor)."
+  }
+}

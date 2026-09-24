@@ -1,0 +1,20 @@
+{
+  "name": "csfm-strut-tie-solver",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Discrete strut and tie solver with CSFM constitutive laws and the dataset-generation scripts",
+  "scripts": {
+    "dataset": "tsx scripts/exportDataset.ts --n 750 --seed 1 --out ../data/dataset.json",
+    "extrapolation": "tsx scripts/exportExtrapolation.ts",
+    "variant": "tsx scripts/exportVariant.ts --n 750 --seed 1 --out ../data/dataset_deepBeam2P.json",
+    "validate:piercaps": "tsx scripts/validatePiercaps.ts",
+    "validate:deepbeams": "tsx scripts/validateLiBeams.ts",
+    "timing": "tsx scripts/timeSolver.ts"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.3"
+  },
+  "engines": { "node": ">=20" }
+}

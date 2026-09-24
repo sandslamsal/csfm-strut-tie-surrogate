@@ -1,0 +1,35 @@
+=== learning curves (test MAPE vs training-set size) ===
+  [deepBeam] n_train=  52  MAPE=19.19 +/- 3.56
+  [deepBeam] n_train= 131  MAPE=12.94 +/- 0.98
+  [deepBeam] n_train= 262  MAPE= 9.15 +/- 0.42
+  [deepBeam] n_train= 393  MAPE= 6.78 +/- 0.58
+  [deepBeam] n_train= 525  MAPE= 5.13 +/- 0.28
+[data] hammerhead: 2 topologies; keeping the dominant 540/750 designs, dropping 210.
+  [hammerhead] n_train=  37  MAPE=15.99 +/- 1.31
+  [hammerhead] n_train=  94  MAPE=11.17 +/- 0.64
+  [hammerhead] n_train= 189  MAPE= 9.08 +/- 0.20
+  [hammerhead] n_train= 283  MAPE= 5.74 +/- 0.36
+  [hammerhead] n_train= 378  MAPE= 4.49 +/- 0.03
+  [multiColumnBent] n_train=  52  MAPE=11.48 +/- 0.97
+  [multiColumnBent] n_train= 131  MAPE= 7.66 +/- 0.55
+  [multiColumnBent] n_train= 262  MAPE= 4.42 +/- 0.20
+  [multiColumnBent] n_train= 393  MAPE= 3.34 +/- 0.07
+  [multiColumnBent] n_train= 525  MAPE= 2.74 +/- 0.04
+  [pileCap] n_train=  52  MAPE=17.57 +/- 1.22
+  [pileCap] n_train= 131  MAPE=10.17 +/- 0.68
+  [pileCap] n_train= 262  MAPE= 7.09 +/- 0.53
+  [pileCap] n_train= 393  MAPE= 6.04 +/- 0.46
+  [pileCap] n_train= 525  MAPE= 5.06 +/- 0.22
+wrote ../figures/learning_curve.png
+
+=== repeated-split stability (5 independent splits) ===
+archetype         MAPE% mean    std   R2 mean     std
+Deep beam               4.78   0.54     0.981   0.008
+[data] hammerhead: 2 topologies; keeping the dominant 540/750 designs, dropping 210.
+[data] hammerhead: 2 topologies; keeping the dominant 540/750 designs, dropping 210.
+[data] hammerhead: 2 topologies; keeping the dominant 540/750 designs, dropping 210.
+[data] hammerhead: 2 topologies; keeping the dominant 540/750 designs, dropping 210.
+[data] hammerhead: 2 topologies; keeping the dominant 540/750 designs, dropping 210.
+Hammerhead              3.93   0.48     0.986   0.003
+Multi-column bent        2.81   0.13     0.992   0.001
+Pile cap                5.78   0.58     0.952   0.012

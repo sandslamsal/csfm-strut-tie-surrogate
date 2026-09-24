@@ -1,0 +1,391 @@
+{
+  "archetype": "deepBeam",
+  "base": {
+    "span": 4000.0,
+    "height": 2200.0,
+    "thickness": 500.0,
+    "supportWidth": 400.0,
+    "fck": 35.0,
+    "fy": 500.0
+  },
+  "P_req_kN": 5119.823749999796,
+  "q90": 2.143694259498372,
+  "tau": 0.13781942071558065,
+  "grid_r2_surrogate_solver": 0.9740654840385464,
+  "grid_max_abs_dlam": 0.23194644451141344,
+  "opt_point": {
+    "botDia": 25,
+    "botCount": 8,
+    "As": 3926.9908169872415,
+    "lam_mean": 1.013228327035904,
+    "lam_lo": 0.9342729790172701,
+    "lam_solver": 1,
+    "flag": false
+  },
+  "opt_uq": {
+    "botDia": 32,
+    "botCount": 5,
+    "As": 4021.238596594935,
+    "lam_mean": 1.087603008747101,
+    "lam_lo": 1.0348760161392985,
+    "lam_solver": 1,
+    "flag": false
+  },
+  "steel_premium_pct": 2.3999999999999977,
+  "governing_member": "BC0",
+  "gov_force_surrogate_kN": 2736.828,
+  "gov_force_solver_kN": 2485.351334951303,
+  "uq_solver_mode": "Reinforcement rupture in tie BC0 (\u03b5 \u2265 \u03b5_u).",
+  "grid": [
+    {
+      "botDia": 20,
+      "botCount": 4,
+      "As": 1256.6370614359173,
+      "lam_mean": 0.33003087639808654,
+      "lam_std": 0.01279916970474955,
+      "lam_lo": 0.3025933697756695,
+      "lam_solver": 0.35,
+      "flag": false
+    },
+    {
+      "botDia": 20,
+      "botCount": 5,
+      "As": 1570.7963267948965,
+      "lam_mean": 0.3844976216554642,
+      "lam_std": 0.015738748279842993,
+      "lam_lo": 0.3507585573162749,
+      "lam_solver": 0.4,
+      "flag": false
+    },
+    {
+      "botDia": 20,
+      "botCount": 6,
+      "As": 1884.9555921538758,
+      "lam_mean": 0.4539871335029602,
+      "lam_std": 0.019057534782497935,
+      "lam_lo": 0.41313360558952883,
+      "lam_solver": 0.5,
+      "flag": false
+    },
+    {
+      "botDia": 20,
+      "botCount": 7,
+      "As": 2199.114857512855,
+      "lam_mean": 0.5374083340167999,
+      "lam_std": 0.02003248114571324,
+      "lam_lo": 0.49446481918122503,
+      "lam_solver": 0.55,
+      "flag": false
+    },
+    {
+      "botDia": 20,
+      "botCount": 8,
+      "As": 2513.2741228718346,
+      "lam_mean": 0.6308407723903656,
+      "lam_std": 0.020583424172474926,
+      "lam_lo": 0.5867162041510111,
+      "lam_solver": 0.65,
+      "flag": false
+    },
+    {
+      "botDia": 20,
+      "botCount": 9,
+      "As": 2827.4333882308138,
+      "lam_mean": 0.7278770983219147,
+      "lam_std": 0.025457796614845707,
+      "lam_lo": 0.6733033658591929,
+      "lam_solver": 0.7,
+      "flag": false
+    },
+    {
+      "botDia": 20,
+      "botCount": 10,
+      "As": 3141.592653589793,
+      "lam_mean": 0.8225488603115082,
+      "lam_std": 0.03570078502462094,
+      "lam_lo": 0.7460172923946429,
+      "lam_solver": 0.8,
+      "flag": false
+    },
+    {
+      "botDia": 25,
+      "botCount": 4,
+      "As": 1963.4954084936207,
+      "lam_mean": 0.48536867201328276,
+      "lam_std": 0.0229000499386689,
+      "lam_lo": 0.4362779664175322,
+      "lam_solver": 0.5,
+      "flag": false
+    },
+    {
+      "botDia": 25,
+      "botCount": 5,
+      "As": 2454.3692606170257,
+      "lam_mean": 0.6009628474712372,
+      "lam_std": 0.024725186056547627,
+      "lam_lo": 0.5479596080567868,
+      "lam_solver": 0.65,
+      "flag": false
+    },
+    {
+      "botDia": 25,
+      "botCount": 6,
+      "As": 2945.243112740431,
+      "lam_mean": 0.7387501299381256,
+      "lam_std": 0.02842600461234893,
+      "lam_lo": 0.677813467030159,
+      "lam_solver": 0.75,
+      "flag": false
+    },
+    {
+      "botDia": 25,
+      "botCount": 7,
+      "As": 3436.116964863836,
+      "lam_mean": 0.8818307816982269,
+      "lam_std": 0.03262507717024778,
+      "lam_lo": 0.8118925910526754,
+      "lam_solver": 0.85,
+      "flag": false
+    },
+    {
+      "botDia": 25,
+      "botCount": 8,
+      "As": 3926.9908169872415,
+      "lam_mean": 1.013228327035904,
+      "lam_std": 0.03683144070979108,
+      "lam_lo": 0.9342729790172701,
+      "lam_solver": 1,
+      "flag": false
+    },
+    {
+      "botDia": 25,
+      "botCount": 9,
+      "As": 4417.864669110647,
+      "lam_mean": 1.122762179374695,
+      "lam_std": 0.039417380444232625,
+      "lam_lo": 1.0382633671919301,
+      "lam_solver": 1.1,
+      "flag": false
+    },
+    {
+      "botDia": 25,
+      "botCount": 10,
+      "As": 4908.738521234051,
+      "lam_mean": 1.2094085812568665,
+      "lam_std": 0.04326091189918613,
+      "lam_lo": 1.1166704127579163,
+      "lam_solver": 1.25,
+      "flag": false
+    },
+    {
+      "botDia": 28,
+      "botCount": 4,
+      "As": 2463.0086404143976,
+      "lam_mean": 0.6272996068000793,
+      "lam_std": 0.028344298761010446,
+      "lam_lo": 0.5665380962565945,
+      "lam_solver": 0.65,
+      "flag": false
+    },
+    {
+      "botDia": 28,
+      "botCount": 5,
+      "As": 3078.7608005179973,
+      "lam_mean": 0.7915312707424164,
+      "lam_std": 0.02769420690727891,
+      "lam_lo": 0.7321633583739224,
+      "lam_solver": 0.8,
+      "flag": false
+    },
+    {
+      "botDia": 28,
+      "botCount": 6,
+      "As": 3694.512960621597,
+      "lam_mean": 0.9757390677928924,
+      "lam_std": 0.031834281995938886,
+      "lam_lo": 0.9074961002229459,
+      "lam_solver": 0.95,
+      "flag": false
+    },
+    {
+      "botDia": 28,
+      "botCount": 7,
+      "As": 4310.2651207251965,
+      "lam_mean": 1.1500000834465027,
+      "lam_std": 0.038688667236637754,
+      "lam_lo": 1.0670634095836795,
+      "lam_solver": 1.1,
+      "flag": false
+    },
+    {
+      "botDia": 28,
+      "botCount": 8,
+      "As": 4926.017280828795,
+      "lam_mean": 1.2898564219474793,
+      "lam_std": 0.043496190584104824,
+      "lam_lo": 1.1966138878822867,
+      "lam_solver": 1.25,
+      "flag": false
+    },
+    {
+      "botDia": 28,
+      "botCount": 9,
+      "As": 5541.769440932395,
+      "lam_mean": 1.387799859046936,
+      "lam_std": 0.047001195001245784,
+      "lam_lo": 1.287043667133202,
+      "lam_solver": 1.4,
+      "flag": false
+    },
+    {
+      "botDia": 28,
+      "botCount": 10,
+      "As": 6157.5216010359945,
+      "lam_mean": 1.4522454261779785,
+      "lam_std": 0.05418229491616789,
+      "lam_lo": 1.3360951515997415,
+      "lam_solver": 1.55,
+      "flag": false
+    },
+    {
+      "botDia": 32,
+      "botCount": 4,
+      "As": 3216.990877275948,
+      "lam_mean": 0.8672465682029724,
+      "lam_std": 0.027084145198186544,
+      "lam_lo": 0.8091864416181995,
+      "lam_solver": 0.8,
+      "flag": false
+    },
+    {
+      "botDia": 32,
+      "botCount": 5,
+      "As": 4021.238596594935,
+      "lam_mean": 1.087603008747101,
+      "lam_std": 0.024596321221730895,
+      "lam_lo": 1.0348760161392985,
+      "lam_solver": 1,
+      "flag": false
+    },
+    {
+      "botDia": 32,
+      "botCount": 6,
+      "As": 4825.486315913922,
+      "lam_mean": 1.3115661144256592,
+      "lam_std": 0.027503474529665114,
+      "lam_lo": 1.2526070739601565,
+      "lam_solver": 1.2,
+      "flag": false
+    },
+    {
+      "botDia": 32,
+      "botCount": 7,
+      "As": 5629.734035232909,
+      "lam_mean": 1.4998046994209289,
+      "lam_std": 0.030639136927241423,
+      "lam_lo": 1.4341237574740169,
+      "lam_solver": 1.4,
+      "flag": false
+    },
+    {
+      "botDia": 32,
+      "botCount": 8,
+      "As": 6433.981754551896,
+      "lam_mean": 1.627161478996277,
+      "lam_std": 0.030451443982826204,
+      "lam_lo": 1.5618828933368563,
+      "lam_solver": 1.6,
+      "flag": false
+    },
+    {
+      "botDia": 32,
+      "botCount": 9,
+      "As": 7238.229473870883,
+      "lam_mean": 1.6925542831420899,
+      "lam_std": 0.04911410286538093,
+      "lam_lo": 1.5872686627691603,
+      "lam_solver": 1.8,
+      "flag": false
+    },
+    {
+      "botDia": 32,
+      "botCount": 10,
+      "As": 8042.47719318987,
+      "lam_mean": 1.7180535554885865,
+      "lam_std": 0.08172719693757399,
+      "lam_lo": 1.5428554325686161,
+      "lam_solver": 1.95,
+      "flag": false
+    },
+    {
+      "botDia": 36,
+      "botCount": 4,
+      "As": 4071.5040790523717,
+      "lam_mean": 1.15030437707901,
+      "lam_std": 0.03975800910096851,
+      "lam_lo": 1.0650753612001798,
+      "lam_solver": 1,
+      "flag": false
+    },
+    {
+      "botDia": 36,
+      "botCount": 5,
+      "As": 5089.380098815464,
+      "lam_mean": 1.400034487247467,
+      "lam_std": 0.03390372949368095,
+      "lam_lo": 1.3273552569562774,
+      "lam_solver": 1.25,
+      "flag": false
+    },
+    {
+      "botDia": 36,
+      "botCount": 6,
+      "As": 6107.256118578558,
+      "lam_mean": 1.6292187929153443,
+      "lam_std": 0.02914075069604007,
+      "lam_lo": 1.5667499329307701,
+      "lam_solver": 1.5,
+      "flag": false
+    },
+    {
+      "botDia": 36,
+      "botCount": 7,
+      "As": 7125.132138341651,
+      "lam_mean": 1.8006881713867187,
+      "lam_std": 0.025877376554796164,
+      "lam_lo": 1.7452149878153245,
+      "lam_solver": 1.75,
+      "flag": false
+    },
+    {
+      "botDia": 36,
+      "botCount": 8,
+      "As": 8143.008158104743,
+      "lam_mean": 1.8944474935531617,
+      "lam_std": 0.03991245245169803,
+      "lam_lo": 1.808887398349955,
+      "lam_solver": 1.95,
+      "flag": false
+    },
+    {
+      "botDia": 36,
+      "botCount": 9,
+      "As": 9160.884177867836,
+      "lam_mean": 1.9203352332115173,
+      "lam_std": 0.10981183121989095,
+      "lam_lo": 1.684932241000433,
+      "lam_solver": 2,
+      "flag": false
+    },
+    {
+      "botDia": 36,
+      "botCount": 10,
+      "As": 10178.760197630929,
+      "lam_mean": 1.9291060328483582,
+      "lam_std": 0.17396768001820964,
+      "lam_lo": 1.5561725158550725,
+      "lam_solver": 2.05,
+      "flag": true
+    }
+  ]
+}
