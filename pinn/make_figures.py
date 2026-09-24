@@ -6,7 +6,7 @@ Produces, in ../figures/:
 The figure has two panels:
   (a) a parity plot, predicted vs measured ultimate load for the continuum CSFM
       analysis, the reference solver and the neural surrogate, with the 1:1 line
-      and a shaded conservative (safe) region. The solver and surrogate cluster
+      The solver and surrogate cluster
       together below the line (the surrogate tracks the solver -- tier 1), while
       the continuum analysis lies nearer the line; the gap to 1:1 is the
       conservative bias against experiment (tier 2).
@@ -36,7 +36,7 @@ from figstyle import panel
 
 DATA = "../validation/piercaps_geevar_menon_2018.json"
 SPECS = ["S1", "S2", "S3", "S4", "S5"]
-RUPTURE = {"S2"}   # solver-predicted reinforcement rupture (see manuscript)
+RUPTURE = {"S2"}   # solver-predicted reinforcement rupture
 
 # reference-solver total-load predictions (kN) -- scripts/validatePiercaps.ts
 SOLVER = [1890, 1994, 2233, 2526, 2771]

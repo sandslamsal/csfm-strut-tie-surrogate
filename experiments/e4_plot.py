@@ -12,7 +12,7 @@ from figstyle import tidy, panel
 txt = open(HERE / "e4_li_beams.log").read()
 li = json.loads(txt[txt.index("{"):])
 beams = [(r["id"], r["Pu"], r["Pcalc"]) for r in li["rows"]]
-# pier caps: Table (validation) of the manuscript, Geevar and Menon series
+# pier caps: solver predictions of solver/scripts/validatePiercaps.ts, Geevar and Menon series
 caps = [("S1", 2224, 1890), ("S2", 3068, 1994), ("S3", 3436, 2233),
         ("S4", 3608, 2526), ("S5", 3464, 2771)]
 C_CAP, C_BEAM = "#2B63A6", "#B8352B"

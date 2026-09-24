@@ -17,23 +17,17 @@ for key, lab, col, mk in (("scratch", "trained from scratch", C_SCRATCH, "o"),
     h = ax.errorbar([x["n"] for x in rows], [x["mape"] for x in rows], yerr=[x["sd"] for x in rows],
                     fmt="-" + mk, color=col, lw=1.6, ms=5, capsize=2.5, elinewidth=0.9,
                     markeredgecolor="white", markeredgewidth=0.7, zorder=3)
-    handles.append(h); labels.append(lab)
-    handles.append(h); labels.append(lab)
-    ax.annotate(lab.split(" from")[0] if key == "scratch" else "warm start",
-                (rows[-1]["n"], rows[-1]["mape"]), xytext=(6, 0), textcoords="offset points",
-                fontsize=7.4, color=INK2, va="center")
+    handles.append(h)
+    labels.append(lab)
 # the reference: the single-load deep beam at its full training set
 ax.axhline(5.6, ls="--", lw=0.9, color=INK2, zorder=2)
-ax.text(140, 4.3, "single-load deep beam at its full training set: 5.6%", fontsize=7, color=INK2)
-# the data saving: a warm start at 131 designs matches training from scratch at 393
+ax.text(552, 3.4, "single-load deep beam at its full training set: 5.6%", fontsize=7,
+        color=INK2, ha="right", va="center")
+# the data saving, stated where nothing else is drawn
 w131 = next(x for x in r["warm"] if x["n"] == 131)["mape"]
 s393 = next(x for x in r["scratch"] if x["n"] == 393)["mape"]
-ax.text(330, 21.5, "warm start at 131 designs matches\ntraining from scratch at 393", fontsize=7.2,
-        color=INK2, ha="center", va="center")
-for x, yv in ((131, w131), (393, s393)):
-    ax.annotate("", xy=(x, yv + 1.2), xytext=(330, 19.6),
-                arrowprops=dict(arrowstyle="-|>", color=INK2, lw=0.8, shrinkA=0, shrinkB=0,
-                                connectionstyle="arc3,rad=0.0"))
+ax.text(552, 15.5, f"warm start at 131 designs: {w131:.1f}%\nfrom scratch at 393 designs: {s393:.1f}%",
+        fontsize=7.2, color=INK2, ha="right", va="center", linespacing=1.4)
 ax.set_xlabel("Training designs of the new configuration")
 ax.set_ylabel("Test MAPE on the failure load (%)")
 ax.set_xlim(20, 560)

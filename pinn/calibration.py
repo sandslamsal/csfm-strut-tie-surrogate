@@ -1,9 +1,8 @@
-"""Per-archetype calibration + interval-width/error analysis (R2 #18).
+"""Per-archetype calibration and interval-width/error analysis.
 
-Reviewer #2 notes the ensemble-spread/error correlation (pooled rho ~0.49) is
-informative but not strong, and asks for per-archetype calibration plots and an
-interval-width/error analysis. Using the already-trained bagged ensembles, this
-script produces:
+The ensemble-spread/error correlation (pooled rho ~0.49) is informative but not
+strong, so calibration is checked per archetype and against interval width.
+Using the already-trained bagged ensembles, this script produces:
 
   * a 2x2 grid of per-archetype reliability diagrams (raw ensemble sigma read
     as a Gaussian interval vs split-conformal), so the calibration is shown to

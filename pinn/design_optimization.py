@@ -11,7 +11,7 @@ against the reference CSFM solver (scripts/verifyDesign.ts), and the predicted
 member-force state identifies the governing tie.
 
 Outputs:
-  runs/design_optimization.json     -- all numbers used in the manuscript
+  runs/design_optimization.json     -- all numbers of the demonstration
   ../figures/optimization.pdf/.tex  -- the two-panel figure
 
 Run (from Research/P1/pinn, after the ensemble exists):

@@ -1,7 +1,7 @@
-"""Learning curves + repeated-split stability (reviewer response, R2 #7).
+"""Learning curves and repeated-split stability.
 
-Reviewer #2 flags an overfitting risk: 378-525 training designs against
-~85k parameters. This script provides the evidence asked for:
+Each network has about 85k parameters and 378-525 training designs, so
+overfitting must be checked. This script reports:
 
   * a learning curve -- held-out test accuracy as a function of training-set
     size (fractions of the training split), repeated over several random
@@ -11,7 +11,7 @@ Reviewer #2 flags an overfitting risk: 378-525 training designs against
     accuracy is shown not to hinge on one lucky split.
 
 Writes ../figures/learning_curve.pdf (+ .tex) and prints the repeated-split
-table used in the manuscript.
+table.
 
 Run:  python learning_curve.py
 """

@@ -19,7 +19,7 @@ Writes, in ../figures/:
                        (b) reliability diagram: raw ensemble vs conformal
   uncertainty.tex   -- a thin \\includegraphics wrapper + caption
 
-and prints the per-archetype summary used in the manuscript.
+and prints the per-archetype summary.
 
 Run (after the dataset is generated):
     python make_ensemble.py
