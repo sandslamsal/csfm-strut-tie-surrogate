@@ -14,7 +14,7 @@ Outputs:
   runs/design_optimization.json     -- all numbers of the demonstration
   ../figures/optimization.pdf/.tex  -- the two-panel figure
 
-Run (from Research/P1/pinn, after the ensemble exists):
+Run (from pinn/, after the ensemble exists):
     python design_optimization.py
 """
 from __future__ import annotations
