@@ -19,7 +19,7 @@ Writes, in ../figures/:
                        (b) reliability diagram: raw ensemble vs conformal
   uncertainty.tex   -- a thin \\includegraphics wrapper + caption
 
-and prints the per-archetype summary.
+and prints the per-archetype summary used in the manuscript.
 
 Run (after the dataset is generated):
     python make_ensemble.py
@@ -37,13 +37,14 @@ import torch
 from config import get_config
 from data import load_archetype
 from model import STMNet
+from figstyle import panel
 
 # archetype -> (legend label, marker, colour) -- csfd palette
 ARCHS = [
-    ("deepBeam",        "Deep beam",         "o", "#26629E"),
-    ("hammerhead",      "Hammerhead",        "s", "#0E7072"),
-    ("multiColumnBent", "Multi-column bent", "^", "#E47E1C"),
-    ("pileCap",         "Pile cap",          "D", "#BE342E"),
+    ("deepBeam",        "Deep beam",         "o", "#2B63A6"),
+    ("hammerhead",      "Hammerhead",        "s", "#1F8A70"),
+    ("multiColumnBent", "Multi-column bent", "^", "#D9761A"),
+    ("pileCap",         "Pile cap",          "D", "#B8352B"),
 ]
 K = 10                # bagged ensemble members per archetype
 BASE_SEED = 41000     # member k uses BASE_SEED + k
@@ -219,8 +220,7 @@ def make_figure(results: dict) -> None:
                      handletextpad=0.4, borderpad=0.6, labelspacing=0.4)
     leg.get_frame().set_edgecolor("0.80")
     leg.get_frame().set_linewidth(0.6)
-    axp.text(0.015, 1.015, "(a)", transform=axp.transAxes, fontsize=10,
-             fontweight="bold", va="bottom")
+    panel(axp, "a", "Ensemble mean with 90% conformal interval")
 
     # ---- (b) reliability diagram: raw ensemble vs conformal ----
     axc.plot([0, 1], [0, 1], ls="--", lw=1.0, color="0.40", zorder=2)
@@ -244,7 +244,7 @@ def make_figure(results: dict) -> None:
     zs = np.array([math.sqrt(2) * _erfinv(2 * p - 1) for p in levels])
     raw_obs = np.array([float(np.mean(test_all_err <= z * test_all_std))
                         for z in zs])
-    axc.plot(levels, raw_obs, "-", color="#BE342E", lw=1.6, zorder=4,
+    axc.plot(levels, raw_obs, "-", color="#B8352B", lw=1.6, zorder=4,
              label="raw ensemble $\\sigma$")
 
     # conformal: per-archetype quantile, pooled observed coverage
@@ -275,8 +275,7 @@ def make_figure(results: dict) -> None:
                      handletextpad=0.6, borderpad=0.6)
     leg.get_frame().set_edgecolor("0.80")
     leg.get_frame().set_linewidth(0.6)
-    axc.text(0.015, 1.015, "(b)", transform=axc.transAxes, fontsize=10,
-             fontweight="bold", va="bottom")
+    panel(axc, "b", "Reliability diagram, pooled")
 
     fig.savefig(PNG, bbox_inches="tight")
     plt.close(fig)

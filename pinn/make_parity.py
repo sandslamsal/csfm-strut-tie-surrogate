@@ -26,13 +26,14 @@ import torch
 from config import get_config
 from data import load_archetype
 from model import STMNet
+from figstyle import panel
 
 # archetype -> (legend label, marker, colour) -- colours match the csfd palette
 ARCHS = [
-    ("deepBeam",        "Deep beam",         "o", "#26629E"),
-    ("hammerhead",      "Hammerhead",        "s", "#0E7072"),
-    ("multiColumnBent", "Multi-column bent", "^", "#E47E1C"),
-    ("pileCap",         "Pile cap",          "D", "#BE342E"),
+    ("deepBeam",        "Deep beam",         "o", "#2B63A6"),
+    ("hammerhead",      "Hammerhead",        "s", "#1F8A70"),
+    ("multiColumnBent", "Multi-column bent", "^", "#D9761A"),
+    ("pileCap",         "Pile cap",          "D", "#B8352B"),
 ]
 
 PNG = "../figures/results_parity.pdf"
@@ -107,8 +108,7 @@ def parity_panel(ax, series, lo, hi) -> None:
                     handletextpad=0.4, borderpad=0.6, labelspacing=0.5)
     leg.get_frame().set_edgecolor("0.80")
     leg.get_frame().set_linewidth(0.6)
-    ax.text(0.015, 1.015, "(a)", transform=ax.transAxes, fontsize=10,
-            fontweight="bold", va="bottom")
+    panel(ax, "a", "Parity on the held-out test designs")
 
 
 def error_panel(ax, series) -> None:
@@ -153,8 +153,7 @@ def error_panel(ax, series) -> None:
     ax.tick_params(length=3, color="0.4")
     ax.xaxis.grid(True, linewidth=0.4, color="0.90", zorder=0)
     ax.set_axisbelow(True)
-    ax.text(0.015, 1.015, "(b)", transform=ax.transAxes, fontsize=10,
-            fontweight="bold", va="bottom")
+    panel(ax, "b", "Signed prediction error per archetype")
 
 
 def write_tex() -> None:

@@ -8,15 +8,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 from common import FIG_DIR, HERE
 
-plt.rcParams.update({"font.family": "serif", "font.size": 9, "axes.linewidth": 0.9,
-                     "mathtext.fontset": "cm", "pdf.fonttype": 42})
+from figstyle import tidy, panel
 txt = open(HERE / "e4_li_beams.log").read()
 li = json.loads(txt[txt.index("{"):])
 beams = [(r["id"], r["Pu"], r["Pcalc"]) for r in li["rows"]]
-# pier caps: solver predictions of solver/scripts/validatePiercaps.ts, Geevar and Menon series
+# pier caps: Table (validation) of the manuscript, Geevar and Menon series
 caps = [("S1", 2224, 1890), ("S2", 3068, 1994), ("S3", 3436, 2233),
         ("S4", 3608, 2526), ("S5", 3464, 2771)]
-C_CAP, C_BEAM = "#26629E", "#BE342E"
+C_CAP, C_BEAM = "#2B63A6", "#B8352B"
 
 fig, (a, b) = plt.subplots(1, 2, figsize=(8.6, 3.7))
 lo, hi = 500, 4000
@@ -37,7 +36,7 @@ a.set_xlabel("Measured ultimate load $P_{exp}$ (kN)")
 a.set_ylabel("Reference-solver prediction $P_{calc}$ (kN)")
 a.set_aspect("equal")
 a.legend(fontsize=7, frameon=False, loc="lower right")
-a.text(0.015, 1.02, "(a)", transform=a.transAxes, fontsize=10, fontweight="bold")
+panel(a, "a", "Predicted against measured load")
 
 ratios_cap = [pe / pc for _, pe, pc in caps]
 ratios_beam = [pe / pc for _, pe, pc in beams]
@@ -55,11 +54,9 @@ b.set_xticks(list(x1) + list(x2))
 b.set_xticklabels([c[0] for c in caps] + [bm[0] for bm in beams], fontsize=7, rotation=45)
 b.set_ylim(0, 1.8)
 b.set_ylabel("$P_{exp}/P_{calc}$")
-b.text(0.015, 1.02, "(b)", transform=b.transAxes, fontsize=10, fontweight="bold")
+panel(b, "b", "Ratio per specimen")
 for ax in (a, b):
-    for sp in ("top", "right"):
-        ax.spines[sp].set_visible(False)
-    ax.grid(True, lw=0.4, color="0.92"); ax.set_axisbelow(True)
+    tidy(ax)
 fig.tight_layout()
 fig.savefig(FIG_DIR / "validation_series.pdf", bbox_inches="tight")
 print("wrote", FIG_DIR / "validation_series.pdf")

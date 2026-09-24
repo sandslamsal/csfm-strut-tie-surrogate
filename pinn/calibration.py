@@ -1,8 +1,9 @@
-"""Per-archetype calibration and interval-width/error analysis.
+"""Per-archetype calibration + interval-width/error analysis (R2 #18).
 
-The ensemble-spread/error correlation (pooled rho ~0.49) is informative but not
-strong, so calibration is checked per archetype and against interval width.
-Using the already-trained bagged ensembles, this script produces:
+Reviewer #2 notes the ensemble-spread/error correlation (pooled rho ~0.49) is
+informative but not strong, and asks for per-archetype calibration plots and an
+interval-width/error analysis. Using the already-trained bagged ensembles, this
+script produces:
 
   * a 2x2 grid of per-archetype reliability diagrams (raw ensemble sigma read
     as a Gaussian interval vs split-conformal), so the calibration is shown to
@@ -29,12 +30,13 @@ from config import get_config
 from data import load_archetype
 from model import STMNet
 from make_ensemble import conformal_q, predict, _erfinv, K, CENSOR, SIG_FLOOR
+from figstyle import panel
 
 ARCHS = [
-    ("deepBeam",        "Deep beam",         "#26629E"),
-    ("hammerhead",      "Hammerhead",        "#0E7072"),
-    ("multiColumnBent", "Multi-column bent", "#E47E1C"),
-    ("pileCap",         "Pile cap",          "#BE342E"),
+    ("deepBeam",        "Deep beam",         "#2B63A6"),
+    ("hammerhead",      "Hammerhead",        "#1F8A70"),
+    ("multiColumnBent", "Multi-column bent", "#D9761A"),
+    ("pileCap",         "Pile cap",          "#B8352B"),
 ]
 PNG = "../figures/calibration.pdf"
 TEX = "../figures/calibration.tex"
@@ -89,14 +91,14 @@ def main() -> None:
         conf = np.array([float(np.mean(err <= conformal_q(r["cal_scores"], p)
                                        * r["test_std"])) for p in levels])
         ax.plot([0, 1], [0, 1], ls="--", lw=1.0, color="0.45")
-        ax.plot(levels, raw, "-", color="#BE342E", lw=1.5,
+        ax.plot(levels, raw, "-", color="#B8352B", lw=1.5,
                 label="raw ensemble $\\sigma$")
         ax.plot(levels, conf, "-", color="0.15", lw=1.8,
                 label="conformal")
         ax.set_xlim(0, 1)
         ax.set_ylim(0, 1)
         ax.set_aspect("equal")
-        ax.set_title(label, fontsize=9.5, color=colour)
+        panel(ax, "abcd"[i], label)
         for sp in ("top", "right"):
             ax.spines[sp].set_visible(False)
         ax.grid(True, lw=0.4, color="0.90")

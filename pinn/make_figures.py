@@ -6,7 +6,7 @@ Produces, in ../figures/:
 The figure has two panels:
   (a) a parity plot, predicted vs measured ultimate load for the continuum CSFM
       analysis, the reference solver and the neural surrogate, with the 1:1 line
-      The solver and surrogate cluster
+      and a shaded conservative (safe) region. The solver and surrogate cluster
       together below the line (the surrogate tracks the solver -- tier 1), while
       the continuum analysis lies nearer the line; the gap to 1:1 is the
       conservative bias against experiment (tier 2).
@@ -32,17 +32,18 @@ import torch
 from config import get_config
 from data import load_archetype
 from model import STMNet
+from figstyle import panel
 
 DATA = "../validation/piercaps_geevar_menon_2018.json"
 SPECS = ["S1", "S2", "S3", "S4", "S5"]
-RUPTURE = {"S2"}   # solver-predicted reinforcement rupture
+RUPTURE = {"S2"}   # solver-predicted reinforcement rupture (see manuscript)
 
 # reference-solver total-load predictions (kN) -- scripts/validatePiercaps.ts
 SOLVER = [1890, 1994, 2233, 2526, 2771]
 
 # modern flat palette
-C_SOLV = "#26629E"   # reference solver (blue)
-C_CONT = "#E47E1C"   # continuum CSFM, Kaufmann et al. (orange)
+C_SOLV = "#2B63A6"   # reference solver (blue)
+C_CONT = "#D9761A"   # continuum CSFM, Kaufmann et al. (orange)
 C_SURR = "#7850A8"   # neural surrogate (purple)
 C_SAFE = "#2C8754"   # conservative-region green
 
@@ -101,8 +102,7 @@ def combined_figure(path: str, measured, series) -> None:
              ha="right", va="bottom", color="0.25",
              bbox=dict(boxstyle="round,pad=0.32", facecolor="white",
                        edgecolor="0.82", linewidth=0.6))
-    axp.text(0.0, 1.04, "(a)", transform=axp.transAxes, fontsize=11,
-             fontweight="bold", va="bottom")
+    panel(axp, "a", "Predicted against measured load")
 
     # ---------- panel (b): compact ratio strip ----------
     y = np.arange(len(SPECS))[::-1]
@@ -124,8 +124,7 @@ def combined_figure(path: str, measured, series) -> None:
     axr.set_ylim(-0.6, len(SPECS) - 0.4)
     axr.set_xlabel("$P_{exp}/P_{pred}$", fontsize=10)
     _modern(axr)
-    axr.text(0.0, 1.04, "(b)", transform=axr.transAxes, fontsize=11,
-             fontweight="bold", va="bottom")
+    panel(axr, "b", "Ratio per specimen")
 
     fig.savefig(path, bbox_inches="tight")
     plt.close(fig)

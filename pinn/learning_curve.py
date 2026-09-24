@@ -1,7 +1,7 @@
-"""Learning curves and repeated-split stability.
+"""Learning curves + repeated-split stability (reviewer response, R2 #7).
 
-Each network has about 85k parameters and 378-525 training designs, so
-overfitting must be checked. This script reports:
+Reviewer #2 flags an overfitting risk: 378-525 training designs against
+~85k parameters. This script provides the evidence asked for:
 
   * a learning curve -- held-out test accuracy as a function of training-set
     size (fractions of the training split), repeated over several random
@@ -11,7 +11,7 @@ overfitting must be checked. This script reports:
     accuracy is shown not to hinge on one lucky split.
 
 Writes ../figures/learning_curve.pdf (+ .tex) and prints the repeated-split
-table.
+table used in the manuscript.
 
 Run:  python learning_curve.py
 """
@@ -34,10 +34,10 @@ from train import batch_loss
 CACHE = "runs/learning_curve_data.json"   # cached curves -> replot without retraining
 
 ARCHS = [
-    ("deepBeam",        "Deep beam",         "o", "#26629E"),
-    ("hammerhead",      "Hammerhead",        "s", "#0E7072"),
-    ("multiColumnBent", "Multi-column bent", "^", "#E47E1C"),
-    ("pileCap",         "Pile cap",          "D", "#BE342E"),
+    ("deepBeam",        "Deep beam",         "o", "#2B63A6"),
+    ("hammerhead",      "Hammerhead",        "s", "#1F8A70"),
+    ("multiColumnBent", "Multi-column bent", "^", "#D9761A"),
+    ("pileCap",         "Pile cap",          "D", "#B8352B"),
 ]
 FRACS = [0.1, 0.25, 0.5, 0.75, 1.0]
 N_REPEAT = 3                 # subsample repeats per fraction
@@ -139,27 +139,28 @@ def main() -> None:
         os.makedirs("runs", exist_ok=True)
         json.dump(curves, open(CACHE, "w"), indent=2)
 
-    fig, ax = plt.subplots(figsize=(5.4, 3.9))
-    for arch, label, mark, colour in ARCHS:
+    from figstyle import COLOUR, MARKER, LABEL, ORDER, tidy, panel, INK2
+    fig, ax = plt.subplots(figsize=(5.6, 3.7))
+    handles = []
+    for arch in ORDER:
         c = curves[arch]
         mm, sm = np.array(c["mape"]), np.array(c["std"])
-        ax.plot(c["frac"], mm, "-", marker=mark, color=colour, lw=1.7, ms=5.2,
-                markeredgecolor="white", markeredgewidth=0.6, label=label,
-                zorder=3)
-        ax.fill_between(c["frac"], mm - sm, mm + sm, color=colour, alpha=0.16,
-                        lw=0)
-    ax.set_xlabel("Fraction of training set (%)")
-    ax.set_ylabel("Test MAPE (%)")
-    ax.set_xlim(2, 105)
-    ax.set_ylim(bottom=0)
+        col = COLOUR[arch]
+        ax.fill_between(c["frac"], mm - sm, mm + sm, color=col, alpha=0.13, lw=0, zorder=1)
+        h, = ax.plot(c["frac"], mm, "-", marker=MARKER[arch], color=col, lw=1.6, ms=4.8,
+                     markeredgecolor="white", markeredgewidth=0.7, zorder=3,
+                     label=f"{LABEL[arch]} ({c['ntr']} designs)")
+        handles.append(h)
+    ax.set_xlabel("Fraction of the training set used (%)")
+    ax.set_ylabel("Test MAPE on the failure load (%)")
+    ax.set_xlim(5, 105)
+    ax.set_ylim(0, 22)
     ax.set_xticks([10, 25, 50, 75, 100])
-    for sp in ("top", "right"):
-        ax.spines[sp].set_visible(False)
-    ax.grid(True, lw=0.5, color="0.90", zorder=0)
-    ax.set_axisbelow(True)
-    leg = ax.legend(frameon=True, fontsize=7.8)
-    leg.get_frame().set_edgecolor("0.80")
-    leg.get_frame().set_linewidth(0.6)
+    tidy(ax)
+    ax.legend(handles=handles, loc="upper right", fontsize=7.4, title="full training set",
+              title_fontsize=7.4)
+    panel(ax, "a", "Learning curves: mean of three subsamples, band one standard deviation")
+    fig.tight_layout()
     fig.savefig(PNG, bbox_inches="tight")
     plt.close(fig)
     print(f"wrote {PNG}")
@@ -168,7 +169,7 @@ def main() -> None:
         fh.write(r"""%% Figure: learning curves rendered by pinn/learning_curve.py.
 \begin{figure}[!htb]
   \centering
-  \includegraphics[width=0.7\linewidth]{learning_curve.pdf}
+  \includegraphics[width=0.78\linewidth]{learning_curve.pdf}
   \caption{Learning curves: held-out test mean absolute percentage error
     against the fraction of the training set used, for each archetype (the
     full set is 378--525 designs, fewest for the hammerhead). Each point is

@@ -11,10 +11,10 @@ against the reference CSFM solver (scripts/verifyDesign.ts), and the predicted
 member-force state identifies the governing tie.
 
 Outputs:
-  runs/design_optimization.json     -- all numbers of the demonstration
+  runs/design_optimization.json     -- all numbers used in the manuscript
   ../figures/optimization.pdf/.tex  -- the two-panel figure
 
-Run (from pinn, after the ensemble exists):
+Run (from Research/P1/pinn, after the ensemble exists):
     python design_optimization.py
 """
 from __future__ import annotations
@@ -28,6 +28,7 @@ import subprocess
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from figstyle import panel, tidy
 import numpy as np
 import torch
 
@@ -57,7 +58,7 @@ BASE = {"span": 4000.0, "height": 2200.0, "thickness": 500.0,
 plt.rcParams.update({"font.family": "serif", "font.size": 9,
                      "axes.linewidth": 0.9, "savefig.dpi": 600, "pdf.fonttype": 42,
                      "mathtext.fontset": "cm"})
-C_SUR, C_SOL, C_OK, C_BAD = "#26629E", "#BE342E", "#0E7072", "#E47E1C"
+C_SUR, C_SOL, C_OK, C_BAD = "#2B63A6", "#B8352B", "#1F8A70", "#D9761A"
 C_FLAG = "#7A4FA3"
 
 
@@ -276,8 +277,8 @@ for opt, col, lab in [(opt_point, C_BAD, "point-estimate optimum"),
                 facecolor=col, edgecolor="black", linewidth=0.5, zorder=6, label=lab)
 axL.set_xlabel(r"bottom-tie steel area $A_s$  ($10^3\,\mathrm{mm}^2$)")
 axL.set_ylabel(r"failure load factor $\lambda_f$")
-axL.legend(fontsize=6.6, loc="upper left", framealpha=0.9)
-axL.set_title("(a) reinforcement minimisation", fontsize=9)
+tidy(axL); axL.legend(fontsize=6.6, loc="upper left")
+panel(axL, "a", "Reinforcement minimisation")
 
 # (b) member-force state at the UQ optimum: surrogate vs solver
 ids = list(MEMBER_IDS)
@@ -298,8 +299,8 @@ if gi is not None:
 axR.set_xticks(x)
 axR.set_xticklabels(ids10, rotation=60, fontsize=6.5, ha="right")
 axR.set_ylabel(r"member force at failure  (kN)")
-axR.legend(fontsize=7, loc="upper right", framealpha=0.9)
-axR.set_title("(b) force state at the optimum", fontsize=9)
+tidy(axR, grid="y"); axR.legend(fontsize=7, loc="upper right")
+panel(axR, "b", "Force state at the optimum")
 
 fig.tight_layout()
 fig.savefig("../figures/optimization.pdf", bbox_inches="tight")
