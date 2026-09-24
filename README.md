@@ -1,5 +1,7 @@
 # CSFM Strut and Tie Surrogate
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22930750.svg)](https://doi.org/10.5281/zenodo.22930750)
+
 Dataset-generation pipeline, generated dataset, trained model weights and
 evaluation code for a neural-network surrogate of a discrete strut and tie
 solver that applies the Compatible Stress Field Method (CSFM) constitutive
@@ -99,4 +101,6 @@ first). Regenerating the dataset: `cd solver && npm run dataset`.
 ## Licence and citation
 
 MIT (see `LICENSE`). If you use this code or data, please cite this
-repository (see `CITATION.cff`).
+repository (see `CITATION.cff`); the archived release is
+https://doi.org/10.5281/zenodo.22930750 (concept DOI for all versions:
+https://doi.org/10.5281/zenodo.22930749).
