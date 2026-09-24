@@ -1,17 +1,17 @@
 
 === deepBeam: M=9 members, 9 free DOFs, rank(A)=9 -> statically determinate ===
 residual of reference labels      0.0000%
-residual predicted   before/after 1.801% (max 5.77%) / 5.29e-07% (max 4.45e-06%)
-force R2             before/after 0.9943 / 0.9949   (with reference lam: 1.0000)
-force rel. L2 error  before/after 6.91% / 5.55%   (with reference lam: 0.00%)
-size of the correction ||dF||/||F|| 4.66%
+residual predicted   before/after 1.921% (max 8.64%) / 6.19e-07% (max 5.72e-06%)
+force R2             before/after 0.9891 / 0.9917   (with reference lam: 1.0000)
+force rel. L2 error  before/after 8.54% / 6.55%   (with reference lam: 0.00%)
+size of the correction ||dF||/||F|| 5.84%
 
 === hammerhead: M=29 members, 29 free DOFs, rank(A)=29 -> statically determinate ===
 residual of reference labels      0.0000%
-residual predicted   before/after 1.625% (max 3.49%) / 2.63e-06% (max 8.87e-06%)
-force R2             before/after 0.9964 / 0.9975   (with reference lam: 1.0000)
-force rel. L2 error  before/after 5.92% / 4.32%   (with reference lam: 0.00%)
-size of the correction ||dF||/||F|| 3.59%
+residual predicted   before/after 1.581% (max 3.94%) / 2.42e-06% (max 7.63e-06%)
+force R2             before/after 0.9967 / 0.9977   (with reference lam: 1.0000)
+force rel. L2 error  before/after 5.88% / 4.28%   (with reference lam: 0.00%)
+size of the correction ||dF||/||F|| 3.56%
 
 === multiColumnBent: M=33 members, 32 free DOFs, rank(A)=32 -> indeterminate by 1 ===
 residual of reference labels      0.0000%
@@ -22,8 +22,8 @@ size of the correction ||dF||/||F|| 3.43%
 
 === pileCap: M=8 members, 8 free DOFs, rank(A)=8 -> statically determinate ===
 residual of reference labels      0.0000%
-residual predicted   before/after 1.751% (max 5.36%) / 1.36e-06% (max 8.64e-06%)
-force R2             before/after 0.9955 / 0.9959   (with reference lam: 1.0000)
-force rel. L2 error  before/after 5.78% / 4.87%   (with reference lam: 0.00%)
-size of the correction ||dF||/||F|| 3.27%
+residual predicted   before/after 1.687% (max 4.59%) / 1.25e-06% (max 8.33e-06%)
+force R2             before/after 0.9950 / 0.9955   (with reference lam: 1.0000)
+force rel. L2 error  before/after 6.10% / 5.08%   (with reference lam: 0.00%)
+size of the correction ||dF||/||F|| 3.16%
 [elapsed 3 s]

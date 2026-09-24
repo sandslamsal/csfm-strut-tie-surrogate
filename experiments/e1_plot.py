@@ -95,12 +95,14 @@ for key, lab, col, mk in (("scratch", "Two-point-load designs only", C_SCRATCH, 
     handles.append(h); labels.append(lab)
     a2.annotate(f"{m[-1]:.1f}%", (n[-1], m[-1]), xytext=(6, 5 if key == "scratch" else -5),
                 textcoords="offset points", fontsize=8, color=col, va="center")
-a2.axhline(5.6, ls="--", lw=0.9, color=INK2, zorder=2)
-a2.text(60, 3.6, "Single-load beam, 525 designs: 5.6%", fontsize=8,
+SINGLE_LOAD_MAPE = 6.55   # single-load deep beam at its full training set (evaluate.py)
+a2.axhline(SINGLE_LOAD_MAPE, ls="--", lw=0.9, color=INK2, zorder=2)
+half_up = lambda v: f"{int(v * 10 + 0.5 + 1e-9) / 10:.1f}"   # 6.55 -> 6.6, as in the accuracy table
+a2.text(60, 4.3, f"Single-load beam, 525 designs: {half_up(SINGLE_LOAD_MAPE)}%", fontsize=8,
         color=INK2, ha="left", va="center")
-w131 = next(x for x in r["warm"] if x["n"] == 131)["mape"]
+w262 = next(x for x in r["warm"] if x["n"] == 262)["mape"]
 s393 = next(x for x in r["scratch"] if x["n"] == 393)["mape"]
-a2.text(548, 16.5, f"Transfer, 131 designs: {w131:.1f}%\nTwo-point-load designs only, 393 designs: {s393:.1f}%",
+a2.text(548, 17.5, f"Transfer, 262 designs: {w262:.1f}%\nTwo-point-load only, 393 designs: {s393:.1f}%",
         fontsize=8, color=INK2, ha="right", va="center", linespacing=1.4)
 a2.set_xlabel("Two-point-load training designs")
 a2.set_ylabel("Test MAPE on the failure load (%)")

@@ -1,19 +1,19 @@
 
 === deepBeam: reference-label residual 0.000% ===
-w_eq=   0.00  MAPE  5.40±0.33%  R2 0.964±0.003  forceR2 0.9940  forceRel  6.43%  eq 1.452±0.248%
-w_eq=   0.01  MAPE  5.39±0.32%  R2 0.964±0.003  forceR2 0.9940  forceRel  6.43%  eq 1.450±0.250%
-w_eq=   0.10  MAPE  5.38±0.27%  R2 0.964±0.002  forceR2 0.9940  forceRel  6.44%  eq 1.422±0.250%
-w_eq=   1.00  MAPE  5.79±0.27%  R2 0.961±0.000  forceR2 0.9937  forceRel  6.46%  eq 1.154±0.089%
-w_eq=  10.00  MAPE  5.46±0.26%  R2 0.961±0.002  forceR2 0.9942  forceRel  6.08%  eq 0.805±0.036%
-w_eq= 100.00  MAPE  5.80±0.16%  R2 0.956±0.002  forceR2 0.9938  forceRel  6.03%  eq 0.505±0.057%
+w_eq=   0.00  MAPE  5.96±0.42%  R2 0.948±0.005  forceR2 0.9911  forceRel  7.66%  eq 1.575±0.260%
+w_eq=   0.01  MAPE  5.96±0.41%  R2 0.948±0.005  forceR2 0.9912  forceRel  7.65%  eq 1.569±0.255%
+w_eq=   0.10  MAPE  5.95±0.43%  R2 0.948±0.005  forceR2 0.9914  forceRel  7.53%  eq 1.491±0.213%
+w_eq=   1.00  MAPE  6.12±0.22%  R2 0.944±0.008  forceR2 0.9907  forceRel  7.39%  eq 1.264±0.173%
+w_eq=  10.00  MAPE  6.02±0.27%  R2 0.948±0.003  forceR2 0.9924  forceRel  6.81%  eq 0.955±0.131%
+w_eq= 100.00  MAPE  6.13±0.23%  R2 0.949±0.004  forceR2 0.9923  forceRel  6.63%  eq 0.638±0.160%
 
 === hammerhead: reference-label residual 0.000% ===
-w_eq=   0.00  MAPE  4.34±0.38%  R2 0.982±0.003  forceR2 0.9964  forceRel  6.05%  eq 1.666±0.034%
-w_eq=   0.01  MAPE  4.34±0.38%  R2 0.982±0.003  forceR2 0.9965  forceRel  6.04%  eq 1.655±0.036%
-w_eq=   0.10  MAPE  4.34±0.38%  R2 0.982±0.003  forceR2 0.9965  forceRel  6.01%  eq 1.592±0.037%
-w_eq=   1.00  MAPE  4.42±0.25%  R2 0.981±0.001  forceR2 0.9966  forceRel  5.92%  eq 1.327±0.028%
-w_eq=  10.00  MAPE  4.24±0.33%  R2 0.984±0.001  forceR2 0.9970  forceRel  5.23%  eq 0.886±0.042%
-w_eq= 100.00  MAPE  4.46±0.68%  R2 0.983±0.003  forceR2 0.9972  forceRel  4.87%  eq 0.596±0.040%
+w_eq=   0.00  MAPE  4.26±0.28%  R2 0.983±0.002  forceR2 0.9967  forceRel  5.90%  eq 1.621±0.030%
+w_eq=   0.01  MAPE  4.26±0.28%  R2 0.983±0.002  forceR2 0.9967  forceRel  5.89%  eq 1.610±0.030%
+w_eq=   0.10  MAPE  4.24±0.27%  R2 0.983±0.002  forceR2 0.9967  forceRel  5.88%  eq 1.548±0.030%
+w_eq=   1.00  MAPE  4.15±0.29%  R2 0.982±0.001  forceR2 0.9969  forceRel  5.56%  eq 1.230±0.042%
+w_eq=  10.00  MAPE  3.91±0.46%  R2 0.986±0.001  forceR2 0.9974  forceRel  4.90%  eq 0.844±0.085%
+w_eq= 100.00  MAPE  4.15±0.46%  R2 0.984±0.002  forceR2 0.9974  forceRel  4.76%  eq 0.593±0.056%
 
 === multiColumnBent: reference-label residual 0.000% ===
 w_eq=   0.00  MAPE  3.08±0.18%  R2 0.993±0.001  forceR2 0.9973  forceRel  5.52%  eq 1.074±0.070%
@@ -24,10 +24,10 @@ w_eq=  10.00  MAPE  2.82±0.04%  R2 0.993±0.000  forceR2 0.9978  forceRel  4.63
 w_eq= 100.00  MAPE  2.98±0.06%  R2 0.993±0.001  forceR2 0.9979  forceRel  4.21%  eq 0.319±0.061%
 
 === pileCap: reference-label residual 0.000% ===
-w_eq=   0.00  MAPE  5.35±0.35%  R2 0.951±0.005  forceR2 0.9946  forceRel  6.49%  eq 1.848±0.070%
-w_eq=   0.01  MAPE  5.36±0.34%  R2 0.951±0.005  forceR2 0.9946  forceRel  6.47%  eq 1.837±0.067%
-w_eq=   0.10  MAPE  5.35±0.26%  R2 0.950±0.004  forceR2 0.9949  forceRel  6.11%  eq 1.706±0.115%
-w_eq=   1.00  MAPE  5.37±0.15%  R2 0.950±0.001  forceR2 0.9944  forceRel  6.32%  eq 1.597±0.140%
-w_eq=  10.00  MAPE  5.18±0.14%  R2 0.954±0.004  forceR2 0.9956  forceRel  5.45%  eq 0.952±0.160%
-w_eq= 100.00  MAPE  5.79±0.32%  R2 0.947±0.007  forceR2 0.9947  forceRel  6.05%  eq 0.651±0.085%
-[elapsed 271 s]
+w_eq=   0.00  MAPE  5.44±0.25%  R2 0.951±0.004  forceR2 0.9946  forceRel  6.36%  eq 1.730±0.162%
+w_eq=   0.01  MAPE  5.44±0.24%  R2 0.951±0.004  forceR2 0.9946  forceRel  6.36%  eq 1.722±0.159%
+w_eq=   0.10  MAPE  5.43±0.21%  R2 0.951±0.004  forceR2 0.9947  forceRel  6.28%  eq 1.606±0.075%
+w_eq=   1.00  MAPE  5.33±0.18%  R2 0.951±0.002  forceR2 0.9944  forceRel  6.29%  eq 1.593±0.149%
+w_eq=  10.00  MAPE  5.33±0.04%  R2 0.955±0.003  forceR2 0.9956  forceRel  5.59%  eq 0.915±0.143%
+w_eq= 100.00  MAPE  5.74±0.35%  R2 0.949±0.006  forceR2 0.9947  forceRel  6.05%  eq 0.647±0.095%
+[elapsed 218 s]

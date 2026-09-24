@@ -11,10 +11,10 @@ authors:
     orcid: "https://orcid.org/0009-0005-3650-4619"
     affiliation: "Department of Civil and Environmental Engineering, Florida International University"
 license: MIT
-version: 1.0.0
+version: 1.1.0
 date-released: 2026-09-24
 repository-code: "https://github.com/sandslamsal/csfm-strut-tie-surrogate"
-doi: 10.5281/zenodo.22930750
+doi: 10.5281/zenodo.22930749
 keywords:
   - Compatible Stress Field Method
   - strut and tie model

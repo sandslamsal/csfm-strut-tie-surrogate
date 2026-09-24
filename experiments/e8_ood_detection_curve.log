@@ -1,22 +1,22 @@
 
-=== deepBeam: in-domain n=92, 95th-pct |err| = 0.277 ===
-delta=0.1: n=132  AUROC 0.642  harmful 23%  [1%: flag 19% rec 52% prec 64%]  [2%: flag 23% rec 58% prec 58%]  [5%: flag 34% rec 71% prec 49%]  [10%: flag 41% rec 81% prec 46%]  [20%: flag 46% rec 90% prec 46%]
-delta=0.2: n=130  AUROC 0.657  harmful 41%  [1%: flag 24% rec 51% prec 87%]  [2%: flag 28% rec 57% prec 81%]  [5%: flag 36% rec 64% prec 72%]  [10%: flag 42% rec 72% prec 70%]  [20%: flag 49% rec 83% prec 69%]
-delta=0.3: n=129  AUROC 0.668  harmful 50%  [1%: flag 29% rec 48% prec 84%]  [2%: flag 30% rec 50% prec 82%]  [5%: flag 36% rec 56% prec 78%]  [10%: flag 41% rec 66% prec 79%]  [20%: flag 48% rec 73% prec 76%]
+=== deepBeam: in-domain n=94, 95th-pct |err| = 0.320 ===
+delta=0.1: n=133  AUROC 0.635  harmful 23%  [1%: flag 20% rec 58% prec 69%]  [2%: flag 23% rec 61% prec 61%]  [5%: flag 29% rec 71% prec 56%]  [10%: flag 38% rec 77% prec 48%]  [20%: flag 44% rec 84% prec 44%]
+delta=0.2: n=130  AUROC 0.649  harmful 37%  [1%: flag 24% rec 56% prec 87%]  [2%: flag 27% rec 58% prec 80%]  [5%: flag 34% rec 67% prec 73%]  [10%: flag 40% rec 75% prec 69%]  [20%: flag 45% rec 81% prec 66%]
+delta=0.3: n=129  AUROC 0.657  harmful 47%  [1%: flag 26% rec 45% prec 82%]  [2%: flag 26% rec 47% prec 82%]  [5%: flag 34% rec 55% prec 75%]  [10%: flag 42% rec 68% prec 76%]  [20%: flag 47% rec 75% prec 74%]
 
-=== hammerhead: in-domain n=74, 95th-pct |err| = 0.211 ===
-delta=0.1: n=102  AUROC 0.849  harmful 45%  [1%: flag 38% rec 35% prec 41%]  [2%: flag 42% rec 39% prec 42%]  [5%: flag 51% rec 48% prec 42%]  [10%: flag 62% rec 59% prec 43%]  [20%: flag 81% rec 78% prec 43%]
-delta=0.2: n=95  AUROC 0.867  harmful 58%  [1%: flag 42% rec 40% prec 55%]  [2%: flag 47% rec 47% prec 58%]  [5%: flag 54% rec 49% prec 53%]  [10%: flag 66% rec 67% prec 59%]  [20%: flag 85% rec 84% prec 57%]
-delta=0.3: n=69  AUROC 0.840  harmful 72%  [1%: flag 36% rec 34% prec 68%]  [2%: flag 41% rec 36% prec 64%]  [5%: flag 52% rec 50% prec 69%]  [10%: flag 62% rec 62% prec 72%]  [20%: flag 83% rec 84% prec 74%]
+=== hammerhead: in-domain n=74, 95th-pct |err| = 0.210 ===
+delta=0.1: n=102  AUROC 0.833  harmful 45%  [1%: flag 42% rec 39% prec 42%]  [2%: flag 43% rec 39% prec 41%]  [5%: flag 52% rec 46% prec 40%]  [10%: flag 59% rec 57% prec 43%]  [20%: flag 70% rec 67% prec 44%]
+delta=0.2: n=96  AUROC 0.852  harmful 58%  [1%: flag 46% rec 43% prec 55%]  [2%: flag 48% rec 45% prec 54%]  [5%: flag 54% rec 50% prec 54%]  [10%: flag 65% rec 64% prec 58%]  [20%: flag 74% rec 71% prec 56%]
+delta=0.3: n=69  AUROC 0.826  harmful 71%  [1%: flag 43% rec 39% prec 63%]  [2%: flag 45% rec 41% prec 65%]  [5%: flag 51% rec 47% prec 66%]  [10%: flag 58% rec 57% prec 70%]  [20%: flag 68% rec 65% prec 68%]
 
 === multiColumnBent: in-domain n=77, 95th-pct |err| = 0.133 ===
 delta=0.1: n=127  AUROC 0.822  harmful 68%  [1%: flag 48% rec 47% prec 66%]  [2%: flag 52% rec 51% prec 67%]  [5%: flag 57% rec 57% prec 67%]  [10%: flag 58% rec 58% prec 68%]  [20%: flag 63% rec 63% prec 68%]
-delta=0.2: n=127  AUROC 0.837  harmful 76%  [1%: flag 54% rec 49% prec 69%]  [2%: flag 55% rec 50% prec 69%]  [5%: flag 57% rec 52% prec 68%]  [10%: flag 61% rec 57% prec 71%]  [20%: flag 65% rec 60% prec 70%]
-delta=0.3: n=133  AUROC 0.867  harmful 86%  [1%: flag 58% rec 55% prec 82%]  [2%: flag 61% rec 59% prec 83%]  [5%: flag 64% rec 61% prec 82%]  [10%: flag 66% rec 64% prec 83%]  [20%: flag 73% rec 71% prec 84%]
+delta=0.2: n=128  AUROC 0.836  harmful 75%  [1%: flag 53% rec 48% prec 68%]  [2%: flag 55% rec 50% prec 69%]  [5%: flag 57% rec 52% prec 68%]  [10%: flag 61% rec 57% prec 71%]  [20%: flag 65% rec 60% prec 70%]
+delta=0.3: n=133  AUROC 0.867  harmful 85%  [1%: flag 58% rec 55% prec 81%]  [2%: flag 61% rec 58% prec 81%]  [5%: flag 64% rec 61% prec 81%]  [10%: flag 66% rec 64% prec 82%]  [20%: flag 73% rec 71% prec 82%]
 
-=== pileCap: in-domain n=91, 95th-pct |err| = 0.225 ===
-delta=0.1: n=147  AUROC 0.780  harmful 34%  [1%: flag 31% rec 38% prec 41%]  [2%: flag 31% rec 38% prec 41%]  [5%: flag 39% rec 48% prec 42%]  [10%: flag 49% rec 56% prec 39%]  [20%: flag 65% rec 74% prec 39%]
-delta=0.2: n=146  AUROC 0.793  harmful 48%  [1%: flag 36% rec 39% prec 51%]  [2%: flag 36% rec 39% prec 51%]  [5%: flag 43% rec 46% prec 51%]  [10%: flag 53% rec 54% prec 49%]  [20%: flag 68% rec 71% prec 51%]
-delta=0.3: n=143  AUROC 0.810  harmful 60%  [1%: flag 41% rec 42% prec 61%]  [2%: flag 41% rec 42% prec 61%]  [5%: flag 46% rec 47% prec 61%]  [10%: flag 54% rec 57% prec 64%]  [20%: flag 68% rec 76% prec 67%]
-wrote figures/ood_detection.pdf
-[elapsed 8 s]
+=== pileCap: in-domain n=92, 95th-pct |err| = 0.240 ===
+delta=0.1: n=147  AUROC 0.768  harmful 32%  [1%: flag 35% rec 43% prec 39%]  [2%: flag 37% rec 49% prec 42%]  [5%: flag 43% rec 55% prec 41%]  [10%: flag 47% rec 60% prec 41%]  [20%: flag 63% rec 74% prec 38%]
+delta=0.2: n=146  AUROC 0.779  harmful 44%  [1%: flag 40% rec 47% prec 51%]  [2%: flag 43% rec 52% prec 52%]  [5%: flag 45% rec 55% prec 53%]  [10%: flag 52% rec 58% prec 49%]  [20%: flag 63% rec 70% prec 49%]
+delta=0.3: n=144  AUROC 0.792  harmful 57%  [1%: flag 44% rec 48% prec 62%]  [2%: flag 47% rec 51% prec 63%]  [5%: flag 51% rec 55% prec 62%]  [10%: flag 52% rec 56% prec 61%]  [20%: flag 65% rec 70% prec 61%]
+wrote ../figures/ood_detection.pdf
+[elapsed 7 s]

@@ -146,6 +146,7 @@ def main() -> None:
 
     fig, (ax, bx) = plt.subplots(1, 2, figsize=(7.0, 3.2), gridspec_kw={"wspace": 0.45})
     handles = []
+    ends = []   # (x, y, colour) of each curve's last point, labelled after all curves are drawn
     for arch in ORDER:
         c = curves[arch]
         n = np.array(c["frac"]) / 100.0 * c["ntr"]
@@ -155,7 +156,21 @@ def main() -> None:
         h, = ax.plot(n, mm, "-", marker=MARKER[arch], color=col, lw=1.7, ms=5.2,
                      markeredgecolor="white", markeredgewidth=0.8, zorder=3, label=LABEL[arch])
         handles.append(h)
-        ax.annotate(f"{mm[-1]:.1f}%", (n[-1], mm[-1]), xytext=(6, 0), textcoords="offset points",
+        ends.append((n[-1], mm[-1], col))
+    # end labels: labels at the same x closer than 1.0 point of MAPE are pushed apart
+    ends.sort(key=lambda e: (e[0], e[1]))
+    for i, (x, y, col) in enumerate(ends):
+        dy = 0.0
+        same_x = [e for e in ends if abs(e[0] - x) < 1e-6]
+        k = same_x.index((x, y, col))
+        if len(same_x) > 1:
+            below = same_x[k - 1] if k > 0 else None
+            above = same_x[k + 1] if k + 1 < len(same_x) else None
+            if above is not None and above[1] - y < 1.0:
+                dy = -4.5
+            if below is not None and y - below[1] < 1.0:
+                dy = 4.5
+        ax.annotate(f"{y:.1f}%", (x, y), xytext=(6, dy), textcoords="offset points",
                     fontsize=8, color=col, va="center")
     ax.set_xlabel("Training designs")
     ax.set_ylabel("Test MAPE on the failure load (%)")
@@ -214,7 +229,8 @@ def main() -> None:
     standard deviation) and training error (dashed lines) against the number
     of trainable parameters, one colour per archetype; the dotted vertical
     line marks the reported width of 128. The train/test gap does not grow
-    with size and the test error is flat beyond the reported width.}
+    with size, and beyond the reported width the test error changes by at
+    most 0.6 points.}
   \label{fig:learning_curve}
 \end{figure}
 """)

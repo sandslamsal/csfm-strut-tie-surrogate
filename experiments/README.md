@@ -6,7 +6,7 @@ from there, so the data and checkpoint paths resolve unchanged. Each writes
 
 | ID | Script | What it measures |
 |---|---|---|
-| E1 | `e1_config_change.py`, `e1_plot.py` | retraining for a two-point-load deep beam (8 nodes, 13 members): from scratch vs warm start |
+| E1 | `e1_config_change.py`, `e1_plot.py` | retraining for a two-point-load deep beam (8 nodes, 13 members): trained on the two-point-load designs only vs transfer from the single-load network |
 | E2 | `e2_weq_sweep.py` | equilibrium-weight sweep, w_eq = 0 to 100, three seeds, four archetypes |
 | E3 | `e3_equilibrium_projection.py` | least-squares projection to exact equilibrium; rank of the equilibrium matrix |
 | E4 | `../solver/scripts/validateLiBeams.ts`, `e4_plot.py` | solver vs the eight deep beams of Li et al. (2022), log in `e4_li_beams.log` |

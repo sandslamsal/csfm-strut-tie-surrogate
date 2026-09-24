@@ -36,10 +36,10 @@ from figstyle import panel, legend_below, save
 
 DATA = "../validation/piercaps_geevar_menon_2018.json"
 SPECS = ["S1", "S2", "S3", "S4", "S5"]
-RUPTURE = {"S2"}   # solver-predicted reinforcement rupture
+RUPTURE = {"S1", "S2", "S5"}   # solver-predicted rupture of the tie
 
 # reference-solver total-load predictions (kN) -- scripts/validatePiercaps.ts
-SOLVER = [1890, 1994, 2233, 2526, 2771]
+SOLVER = [2002, 1994, 3264, 3608, 3810]
 
 # modern flat palette
 C_SOLV = "#2B63A6"   # reference solver (blue)

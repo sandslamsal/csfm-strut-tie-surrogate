@@ -24,7 +24,7 @@ from model import STMNet
 DATA = "../validation/piercaps_geevar_menon_2018.json"
 
 # Reference-solver total-load predictions (kN), from scripts/validatePiercaps.ts
-SOLVER = {"S1": 1890, "S2": 1994, "S3": 2233, "S4": 2526, "S5": 2771}
+SOLVER = {"S1": 2002, "S2": 1994, "S3": 3264, "S4": 3608, "S5": 3810}
 
 
 def main() -> None:

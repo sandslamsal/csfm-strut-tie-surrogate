@@ -1,13 +1,32 @@
 {
   "title": "CSFM Strut and Tie Surrogate: dataset-generation pipeline, dataset, trained models and evaluation code",
   "upload_type": "software",
-  "description": "<p>Dataset-generation pipeline, generated dataset, trained model weights and evaluation code for a neural-network surrogate of a discrete strut and tie solver that applies the Compatible Stress Field Method (CSFM) constitutive laws to four concrete D-region archetypes (deep beam, hammerhead pier, multi-column bent, pile cap).</p><p>Contents: the TypeScript solver core and the Latin-hypercube sweep that generated the training data; the datasets (750 designs per archetype, three out-of-domain shells, a two-point-load deep-beam variant, and the pier-cap experimental benchmark); the PyTorch training, evaluation, uncertainty (bagged ensemble with split-conformal calibration), out-of-domain and design-optimisation code with the trained checkpoints and ensembles; and additional experiments (equilibrium-weight sweep, least-squares equilibrium projection, censoring-aware loss, network-width sweep, member-force conformal intervals, out-of-domain detection curve, retraining for a changed loading configuration, and the check of the solver against the pier-cap tests of Geevar and Menon and the deep-beam tests of Li et al. 2022).</p>",
+  "description": "<p>Dataset-generation pipeline, generated dataset, trained model weights and evaluation code for a neural-network surrogate of a discrete strut and tie solver that applies the Compatible Stress Field Method (CSFM) constitutive laws to four concrete D-region archetypes (deep beam, hammerhead pier, multi-column bent, pile cap).</p><p>Contents: the TypeScript solver core and the Latin-hypercube sweep that generated the training data; the datasets (750 designs per archetype, three out-of-domain shells, a two-point-load deep-beam variant, and the pier-cap experimental benchmark); the PyTorch training, evaluation, uncertainty (bagged ensemble with split-conformal calibration), out-of-domain and design-optimisation code with the trained checkpoints and ensembles; and additional experiments (equilibrium-weight sweep, least-squares equilibrium projection, censoring-aware loss, network-width sweep, member-force conformal intervals, out-of-domain detection curve, retraining for a changed loading configuration, and the check of the solver against the pier-cap tests of Geevar and Menon and the deep-beam tests of Li et al. 2022).</p><p>Version 1.1.0 corrects the reference solver: a diagonal strut that lands on a bearing takes the length of the bearing as its width, a tie ruptures when the steel stress at a crack reaches the tensile strength, and the pier-cap benchmark specimens are 500 mm thick. All datasets were regenerated and every network and experiment was rerun.</p>",
   "creators": [
-    {"name": "Lamsal, Sandesh", "affiliation": "University of Miami", "orcid": "0009-0007-9267-4019"},
-    {"name": "Bhandari, Rubi", "affiliation": "Florida International University", "orcid": "0009-0005-3650-4619"}
+    {
+      "name": "Lamsal, Sandesh",
+      "affiliation": "University of Miami",
+      "orcid": "0009-0007-9267-4019"
+    },
+    {
+      "name": "Bhandari, Rubi",
+      "affiliation": "Florida International University",
+      "orcid": "0009-0005-3650-4619"
+    }
   ],
   "license": "MIT",
   "access_right": "open",
-  "keywords": ["Compatible Stress Field Method", "strut and tie model", "discontinuity regions", "neural-network surrogate", "machine learning", "reinforced concrete", "failure load", "conformal prediction", "dataset"],
-  "language": "eng"
+  "keywords": [
+    "Compatible Stress Field Method",
+    "strut and tie model",
+    "discontinuity regions",
+    "neural-network surrogate",
+    "machine learning",
+    "reinforced concrete",
+    "failure load",
+    "conformal prediction",
+    "dataset"
+  ],
+  "language": "eng",
+  "version": "1.1.0"
 }

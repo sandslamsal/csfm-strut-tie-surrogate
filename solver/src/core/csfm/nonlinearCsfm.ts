@@ -181,8 +181,14 @@ export function runCsfmAnalysis(input: CsfmAnalysisInput): CsfmAnalysisResult {
     const crushed = memberStates.find(
       (m) => m.kind === 'strut' && m.utilization >= 1.0,
     );
+    // A tie ruptures when the steel stress at a crack reaches the tensile
+    // strength f_t (CSFM: sigma_sr = f_t). Its utilisation is sigma_sr / f_y.
+    // With tension stiffening the average strain is then still below eps_u,
+    // so the strain limit alone would let sigma_sr exceed f_t; it is kept
+    // only as a secondary check.
     const ruptured = memberStates.find(
-      (m) => m.kind === 'tie' && m.strain >= steel.epsU,
+      (m) => m.kind === 'tie'
+        && (m.utilization * steel.fy >= steel.ft || m.strain >= steel.epsU),
     );
     if (crushed) {
       failureLoadFactor = lf;
@@ -191,7 +197,7 @@ export function runCsfmAnalysis(input: CsfmAnalysisInput): CsfmAnalysisResult {
     }
     if (ruptured) {
       failureLoadFactor = lf;
-      failureMode = `Reinforcement rupture in tie ${ruptured.id} (ε ≥ ε_u).`;
+      failureMode = `Reinforcement rupture in tie ${ruptured.id} (σ_sr ≥ f_t).`;
       break;
     }
     if (!converged) {

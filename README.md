@@ -1,6 +1,6 @@
 # CSFM Strut and Tie Surrogate
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22930750.svg)](https://doi.org/10.5281/zenodo.22930750)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22930749.svg)](https://doi.org/10.5281/zenodo.22930749)
 
 Dataset-generation pipeline, generated dataset, trained model weights and
 evaluation code for a neural-network surrogate of a discrete strut and tie
@@ -18,6 +18,26 @@ least-squares projection makes the predicted force state exactly
 equilibrated; an ensemble-spread flag marks out-of-domain designs. The
 reference solver is checked against two experimental series (five pier caps
 of Geevar and Menon, eight deep beams of Li et al. 2022).
+
+## Version 1.1.0
+
+Version 1.1.0 corrects the reference solver and regenerates everything
+built on it:
+
+* A diagonal strut that lands on a bearing now takes the length of that
+  bearing as its width (deep-beam, hammerhead and multi-column-bent
+  elements; the pier-cap element already did). Before, the deep-beam strut
+  took the width of the member, which over-predicted the deep beams of
+  Li et al. by a factor of about two.
+* A tie now ruptures when the steel stress at a crack reaches the tensile
+  strength f_t, as in the CSFM. Before, rupture was taken at an average
+  strain of eps_u, which let the stress at a crack exceed f_t.
+* The pier-cap benchmark specimens are 500 mm thick (300 mm before), and the
+  pier-cap design space samples the thickness from 300 to 700 mm.
+
+All datasets were regenerated and every network, ensemble and experiment was
+rerun. Version 1.0.0 (https://doi.org/10.5281/zenodo.22930750) is
+superseded.
 
 ## Contents
 
@@ -64,8 +84,8 @@ a laptop CPU (one 400-epoch network trains in about 4 s).
 
 | Command | Reproduces |
 |---|---|
-| `python evaluate.py --archetype deepBeam` (and `hammerhead`, `multiColumnBent`, `pileCap`) | failure-load accuracy: MAPE 5.6 / 4.3 / 2.9 / 4.9 %, R2 0.964 / 0.983 / 0.994 / 0.957 |
-| `python force_equilibrium.py` | member-force accuracy: force R2 0.994-0.997, equilibrium residual 1.2-1.8 % |
+| `python evaluate.py --archetype deepBeam` (and `hammerhead`, `multiColumnBent`, `pileCap`) | failure-load accuracy: MAPE 6.6 / 4.3 / 2.9 / 5.1 %, R2 0.945 / 0.985 / 0.994 / 0.955 |
+| `python force_equilibrium.py` | member-force accuracy: force R2 0.989-0.997, equilibrium residual 1.2-1.9 % |
 | `python ../experiments/e3_equilibrium_projection.py` | exact equilibrium by projection; static determinacy of the trusses |
 | `python timing_surrogate.py` and `cd ../solver && npm run timing` | surrogate and solver timing |
 | `python baselines.py` | seven tabular baselines |
@@ -79,8 +99,8 @@ a laptop CPU (one 400-epoch network trains in about 4 s).
 | `python ../experiments/e1_config_change.py`, `python ../experiments/e1_plot.py` | retraining for a changed loading configuration |
 | `python design_optimization.py` (needs `solver/` installed) | reliability-aware reinforcement design |
 | `python make_parity.py`, `python make_figures.py`, `python validate_experimental.py` | parity plot; pier-cap check of solver and surrogate |
-| `cd solver && npm run validate:piercaps` | solver vs pier caps (mean ratio 1.39, CoV 0.11) |
-| `cd solver && npm run validate:deepbeams` | solver vs Li et al. deep beams (mean ratio 0.45, CoV 0.09) |
+| `cd solver && npm run validate:piercaps` | solver vs pier caps (mean ratio 1.12, CoV 0.19) |
+| `cd solver && npm run validate:deepbeams` | solver vs Li et al. deep beams (mean ratio 0.98, CoV 0.10) |
 | `python ../experiments/e4_plot.py` | the two experimental series side by side |
 
 Retraining from scratch: `python train.py --archetype deepBeam` writes
@@ -90,10 +110,14 @@ first). Regenerating the dataset: `cd solver && npm run dataset`.
 ## Notes
 
 * The solver is a discrete strut and tie solver with the CSFM constitutive
-  laws, not the continuum CSFM. Its bias against the two experimental series
-  differs in sign: conservative by a mean factor of 1.39 on the pier caps,
-  unconservative by a factor of 2.2 on the thin deep beams. The surrogate
-  reproduces the solver, not the measured capacity.
+  laws, not the continuum CSFM. Against the two experimental series it
+  predicts the deep beams with a mean ratio of measured to predicted failure
+  load of 0.98 (CoV 0.10) and the pier caps with 1.12 (CoV 0.19). The
+  surrogate reproduces the solver, not the measured capacity.
+* The load factor is raised in steps of 0.05 up to 3.0, so the failure load
+  factor is resolved to 0.05. For the statically indeterminate multi-column
+  bent the secant iteration stops converging when the first tie yields, so
+  its labels are first-yield loads.
 * Designs that do not fail within the analysed load range carry the label
   `failureLoadFactor = 3.0`.
 * The datasets are gzipped JSON; the loaders read them directly.
@@ -101,6 +125,6 @@ first). Regenerating the dataset: `cd solver && npm run dataset`.
 ## Licence and citation
 
 MIT (see `LICENSE`). If you use this code or data, please cite this
-repository (see `CITATION.cff`); the archived release is
-https://doi.org/10.5281/zenodo.22930750 (concept DOI for all versions:
-https://doi.org/10.5281/zenodo.22930749).
+repository (see `CITATION.cff`); the archived releases are at
+https://doi.org/10.5281/zenodo.22930749 (concept DOI, resolves to the latest
+version).

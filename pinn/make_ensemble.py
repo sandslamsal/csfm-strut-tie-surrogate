@@ -294,8 +294,7 @@ def write_tex() -> None:
   \includegraphics[width=\linewidth]{uncertainty.pdf}
   \caption{Predictive uncertainty of the surrogate, on the genuine-failure
     test designs of all four archetypes. (a)~Bagged-ensemble mean
-    prediction against the reference Compatible Stress Field Method
-    solver, with bars showing the 90\% split-conformal prediction
+    prediction against the reference solver, with bars showing the 90\% split-conformal prediction
     interval; its width
     adapts to the ensemble spread. (b)~Reliability diagram: the raw
     ensemble standard deviation, read as a Gaussian interval, is

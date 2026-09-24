@@ -24,11 +24,11 @@
       "heightBandRoles": ["cap (constant width)", "taper", "stem (constant width)"],
       "lowerStemWidth": 640,
       "dimension_a": 136,
-      "outOfPlaneThickness_b": 300,
+      "outOfPlaneThickness_b": 500,
       "csfmModelSupportSpan": 1260
     },
     "shapeNotes": [
-      "The pier cap is a stepped shape: a 1200 mm wide cap at one end (160 mm constant band), a 320 mm tapered transition, and a 640 mm wide stem (500 mm constant band). Total height 980 mm, out-of-plane thickness 300 mm.",
+      "The pier cap is a stepped shape: a 1200 mm wide cap at one end (160 mm constant band), a 320 mm tapered transition, and a 640 mm wide stem (500 mm constant band). Total height 980 mm, out-of-plane thickness 500 mm (Kaufmann et al. 2020, Fig. 6.22a: b = 500).",
       "Structural action (D-region): a concentrated load over the loading plate l_b at the stem end spreads through the depth to four supports under the wide cap end — i.e. pile-cap action.",
       "The repo's buildPileCap produces a rectangular cap with 2x2 piles. It captures the load-spread action but not the taper; the cap is modelled at the 1200 mm wide envelope. The CSFM book model is 2D plane stress; the repo solver is a 3D space truss."
     ]

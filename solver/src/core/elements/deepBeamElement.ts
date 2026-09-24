@@ -101,14 +101,26 @@ export function buildDeepBeam(p: DeepBeamParams): ElementModel {
         group: isV ? 'stirrup' : isBot ? 'bottomBars' : 'topBars',
       };
     });
+  // A diagonal strut that lands on a bearing is limited by that bearing: its
+  // width is the smaller of the geometric rule and the bearing length, the
+  // bearing being the nodal zone through which the strut force enters.
+  const onBearing = new Set(
+    tr.nodes
+      .filter((nd) => nd.id.startsWith('B') && supports.some((s) => Math.abs(nd.x - s.x) < 1))
+      .map((nd) => nd.id),
+  );
   const struts = tr.members
     .filter((m) => m.id.startsWith('D'))
-    .map((m) => ({
-      memberId: m.id,
-      width: Math.min(p.thickness, 0.3 * H),
-      thickness: p.thickness,
-      type: 'bottle-reinforced' as const,
-    }));
+    .map((m) => {
+      const w = Math.min(p.thickness, 0.3 * H);
+      const bears = onBearing.has(m.ni) || onBearing.has(m.nj);
+      return {
+        memberId: m.id,
+        width: bears ? Math.min(w, p.supportWidth) : w,
+        thickness: p.thickness,
+        type: 'bottle-reinforced' as const,
+      };
+    });
   const nodeSpecs = tr.nodes.map((nd) => ({
     id: nd.id,
     type: (nd.id.startsWith('B') ? 'CCT' : 'CCC') as 'CCC' | 'CCT',
