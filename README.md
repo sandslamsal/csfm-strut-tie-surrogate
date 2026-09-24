@@ -36,8 +36,8 @@ built on it:
   pier-cap design space samples the thickness from 300 to 700 mm.
 
 All datasets were regenerated and every network, ensemble and experiment was
-rerun. Version 1.0.0 (https://doi.org/10.5281/zenodo.22930750) is
-superseded.
+rerun. Version 1.1.0 is archived at https://doi.org/10.5281/zenodo.22933711;
+version 1.0.0 (https://doi.org/10.5281/zenodo.22930750) is superseded.
 
 ## Contents
 
