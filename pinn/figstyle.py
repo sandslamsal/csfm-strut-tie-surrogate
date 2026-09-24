@@ -4,9 +4,12 @@ One palette, one set of rc parameters and one way of labelling panels, so the
 figures read as a set. The four archetype colours were validated for
 colour-vision safety and contrast against a white page.
 """
+import os
+
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from matplotlib.transforms import Bbox
 
 # archetype -> colour (blue, green, orange, red); validated categorical set
 COLOUR = {
@@ -53,9 +56,24 @@ def panel(ax, tag, title=""):
     ax.set_title(text, loc="left", fontweight="bold", fontsize=10, pad=7, color=INK)
 
 
-def legend_below(fig, handles, labels, ncol=None, y=-0.02):
+def legend_below(fig, handles, labels, ncol=None, y=-0.02, **kw):
     """One shared legend centred under all panels."""
     ncol = ncol or len(labels)
-    return fig.legend(handles, labels, loc="lower center", ncol=ncol, frameon=False,
-                      bbox_to_anchor=(0.5, y), fontsize=8.5, handletextpad=0.5,
-                      columnspacing=1.6)
+    opts = dict(loc="lower center", ncol=ncol, frameon=False, bbox_to_anchor=(0.5, y),
+                fontsize=8.5, handletextpad=0.5, columnspacing=1.6)
+    opts.update(kw)
+    return fig.legend(handles, labels, **opts)
+
+
+def save(fig, path, pad=0.03):
+    """Write the figure exactly TEXTWIDTH inches wide, cropped tightly only in
+    the vertical direction, so that every figure included at the text width
+    prints at the same scale and its fonts keep their nominal sizes."""
+    fig.canvas.draw()
+    tb = fig.get_tightbbox(fig.canvas.get_renderer())
+    w = fig.get_figwidth()
+    if tb.x0 < -0.01 or tb.x1 > w + 0.01:
+        print(f"[figstyle] {os.path.basename(path)}: content spans "
+              f"{tb.x0:.2f}..{tb.x1:.2f} in, outside 0..{w:.2f}")
+    fig.savefig(path, bbox_inches=Bbox([[0.0, tb.y0 - pad], [w, tb.y1 + pad]]))
+    print(f"wrote {path}  ({w:.2f} x {tb.y1 - tb.y0 + 2 * pad:.2f} in)")

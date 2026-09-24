@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from common import FIG_DIR, HERE
 
-from figstyle import tidy, panel, legend_below
+from figstyle import tidy, panel, legend_below, save
 txt = open(HERE / "e4_li_beams.log").read()
 li = json.loads(txt[txt.index("{"):])
 beams = [(r["id"], r["Pu"], r["Pcalc"]) for r in li["rows"]]
@@ -45,13 +45,14 @@ b.scatter(x1, ratios_cap, s=34, color=C_CAP, zorder=5)
 b.scatter(x2, ratios_beam, s=34, marker="s", color=C_BEAM, zorder=5)
 b.hlines(np.mean(ratios_cap), x1[0] - 0.4, x1[-1] + 0.4, color=C_CAP, lw=1.4)
 b.hlines(np.mean(ratios_beam), x2[0] - 0.4, x2[-1] + 0.4, color=C_BEAM, lw=1.4)
-b.text(x1.mean(), 1.74, f"Mean {np.mean(ratios_cap):.2f}, CoV {np.std(ratios_cap)/np.mean(ratios_cap):.2f}",
-       ha="center", va="center", fontsize=8, color=C_CAP)
+b.text(-0.3, 1.74, f"Mean {np.mean(ratios_cap):.2f}, CoV {np.std(ratios_cap)/np.mean(ratios_cap):.2f}",
+       ha="left", va="center", fontsize=8, color=C_CAP)
 b.text(x2.mean(), 0.22, f"Mean {np.mean(ratios_beam):.2f}, CoV {np.std(ratios_beam)/np.mean(ratios_beam):.2f}",
        ha="center", va="center", fontsize=8, color=C_BEAM)
 b.set_xticks(list(x1) + list(x2))
 b.set_xticklabels([c[0] for c in caps] + [bm[0] for bm in beams], fontsize=8, rotation=45)
 b.set_ylim(0, 2.0)
+b.set_xlim(-1.0, 13.6)
 b.set_ylabel("$P_{exp}/P_{calc}$")
 panel(b, "b", "Ratio per specimen")
 for ax in (a, b):
@@ -59,5 +60,5 @@ for ax in (a, b):
 fig.tight_layout()
 fig.subplots_adjust(bottom=0.27)
 legend_below(fig, [h_cap, h_beam, h_one], ["Pier caps (5)", "Deep beams (8)", "1:1 line"], ncol=3, y=0.005)
-fig.savefig(FIG_DIR / "validation_series.pdf", bbox_inches="tight")
+save(fig, FIG_DIR / "validation_series.pdf")
 print("wrote", FIG_DIR / "validation_series.pdf")

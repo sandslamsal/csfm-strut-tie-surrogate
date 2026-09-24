@@ -28,7 +28,7 @@ import subprocess
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from figstyle import panel, tidy
+from figstyle import panel, tidy, save
 import numpy as np
 import torch
 
@@ -249,7 +249,7 @@ print("\n[demo] wrote runs/design_optimization.json")
 # --------------------------------------------------------------------------- #
 # 6. figure                                                                   #
 # --------------------------------------------------------------------------- #
-fig, (axL, axR) = plt.subplots(1, 2, figsize=(7.0, 3.2), gridspec_kw={"wspace": 0.45})
+fig, (axL, axR) = plt.subplots(1, 2, figsize=(7.0, 2.9), gridspec_kw={"wspace": 0.45})
 
 # (a) capacity vs steel: surrogate (conformal bars) + solver, constraint, optima
 As = np.array([g["As"] for g in grid]) / 1e3            # 10^3 mm^2
@@ -274,7 +274,7 @@ for opt, col, lab in [(opt_point, C_BAD, "Optimum on the mean"),
                 facecolor=col, edgecolor="black", linewidth=0.5, zorder=6, label=lab)
 axL.set_xlabel(r"bottom-tie steel area $A_s$  ($10^3\,\mathrm{mm}^2$)")
 axL.set_ylabel(r"failure load factor $\lambda_f$")
-tidy(axL); axL.legend(fontsize=8, loc="upper center", bbox_to_anchor=(0.5, -0.2), ncol=2, columnspacing=1.2)
+tidy(axL); axL.legend(fontsize=8, loc="upper center", bbox_to_anchor=(0.5, -0.22), ncol=2, columnspacing=1.2)
 panel(axL, "a", "Reinforcement minimisation")
 
 # (b) member-force state at the UQ optimum: surrogate vs solver
@@ -295,10 +295,10 @@ axR.set_xticks(x)
 axR.set_xticklabels(ids10, rotation=60, fontsize=8, ha="right")
 axR.set_ylabel(r"member force at failure  (kN)")
 lo_, hi_ = axR.get_ylim(); axR.set_ylim(lo_, hi_ * 1.18)
-tidy(axR, grid="y"); axR.legend(fontsize=8, loc="upper right")
+tidy(axR, grid="y"); axR.legend(fontsize=8, loc="upper center", bbox_to_anchor=(0.5, -0.22), ncol=2, columnspacing=1.2)
 panel(axR, "b", "Force state at the optimum")
 
 fig.tight_layout()
 fig.subplots_adjust(bottom=0.32)
-fig.savefig("../figures/optimization.pdf", bbox_inches="tight")
+save(fig, "../figures/optimization.pdf")
 print("[demo] wrote ../figures/optimization.pdf")

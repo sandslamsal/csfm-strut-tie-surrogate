@@ -26,7 +26,7 @@ import torch
 from config import get_config
 from data import load_archetype
 from model import STMNet
-from figstyle import panel, legend_below
+from figstyle import panel, legend_below, save
 
 # archetype -> (legend label, marker, colour) -- colours match the csfd palette
 ARCHS = [
@@ -186,10 +186,11 @@ def main() -> None:
     gs = fig.add_gridspec(1, 2, width_ratios=[1.0, 1.1], wspace=0.6)
     handles = parity_panel(fig.add_subplot(gs[0]), series, lo, hi)
     error_panel(fig.add_subplot(gs[1]), series)
+    fig.tight_layout()
     fig.subplots_adjust(bottom=0.27)
     legend_below(fig, handles, [h.get_label() for h in handles], ncol=4, y=0.005)
 
-    fig.savefig(PNG, bbox_inches="tight")
+    save(fig, PNG)
     plt.close(fig)
     print(f"wrote {PNG}")
 

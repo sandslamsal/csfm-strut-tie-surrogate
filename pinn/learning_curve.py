@@ -135,7 +135,7 @@ def main() -> None:
         os.makedirs("runs", exist_ok=True)
         json.dump(curves, open(CACHE, "w"), indent=2)
 
-    from figstyle import COLOUR, MARKER, LABEL, ORDER, tidy, panel, legend_below, INK2
+    from figstyle import COLOUR, MARKER, LABEL, ORDER, tidy, panel, legend_below, INK2, save
     # (b) needs the width sweep of experiment E6
     for cand in ("../experiments/e6_width_sweep.json",):
         if os.path.exists(cand):
@@ -144,7 +144,7 @@ def main() -> None:
     else:
         width = None
 
-    fig, (ax, bx) = plt.subplots(1, 2, figsize=(7.0, 3.4), gridspec_kw={"wspace": 0.45})
+    fig, (ax, bx) = plt.subplots(1, 2, figsize=(7.0, 3.2), gridspec_kw={"wspace": 0.45})
     handles = []
     for arch in ORDER:
         c = curves[arch]
@@ -179,21 +179,24 @@ def main() -> None:
             bx.plot(params, tr, "--", color=col, lw=1.2, zorder=2)
         p128 = width["deepBeam"]["widths"][3]["params"]
         bx.axvline(p128, ls=":", lw=0.9, color=INK2, zorder=1)
-        bx.text(p128 * 1.12, 0.35, "Width 128", fontsize=8, color=INK2, va="bottom")
         bx.set_xscale("log")
         bx.set_xlabel("Trainable parameters (six hidden layers)")
         bx.set_ylabel("MAPE on the failure load (%)")
         bx.set_ylim(0, 11)
         tidy(bx)
-        from matplotlib.lines import Line2D
-        style = [Line2D([0], [0], color=INK2, lw=1.7, marker="o", ms=4, markeredgecolor="white"),
-                 Line2D([0], [0], color=INK2, lw=1.2, ls="--")]
-        bx.legend(style, ["Test split", "Training split"], loc="upper right", fontsize=8, bbox_to_anchor=(1.0, 0.98))
-        panel(bx, "b", "Network-width sweep")
+        panel(bx, "b", "Network-width study")
+    # second legend row: the line styles of panel (b)
+    from matplotlib.lines import Line2D
+    style = [Line2D([0], [0], color=INK2, lw=1.7, marker="o", ms=4.5, markeredgecolor="white"),
+             Line2D([0], [0], color=INK2, lw=1.2, ls="--"),
+             Line2D([0], [0], color=INK2, lw=0.9, ls=":")]
+    style_labels = ["Test error, one colour per archetype", "Training error",
+                    "Reported width, 128"]
     fig.tight_layout(w_pad=2.0)
-    fig.subplots_adjust(bottom=0.22)
-    legend_below(fig, handles, [LABEL[a] for a in ORDER], ncol=4, y=0.005)
-    fig.savefig(PNG, bbox_inches="tight")
+    fig.subplots_adjust(bottom=0.30)
+    legend_below(fig, handles + style, [LABEL[a] for a in ORDER] + style_labels,
+                 ncol=4, y=0.005)
+    save(fig, PNG)
     plt.close(fig)
     print(f"wrote {PNG}")
 
@@ -206,11 +209,12 @@ def main() -> None:
     test mean absolute percentage error against the number of training
     designs for each archetype, each point the mean of three independent
     random subsamples and the band one standard deviation; the label gives
-    the error at the full training set. (b)~Network-width sweep at six hidden
-    layers, three seeds: test error (solid, band one standard deviation) and
-    training error (dashed) against the number of trainable parameters. The
-    train/test gap does not grow with size and the test error is flat beyond
-    the reported width of 128.}
+    the error at the full training set. (b)~Network-width study at six hidden
+    layers, three seeds: test error (solid lines with markers, band one
+    standard deviation) and training error (dashed lines) against the number
+    of trainable parameters, one colour per archetype; the dotted vertical
+    line marks the reported width of 128. The train/test gap does not grow
+    with size and the test error is flat beyond the reported width.}
   \label{fig:learning_curve}
 \end{figure}
 """)

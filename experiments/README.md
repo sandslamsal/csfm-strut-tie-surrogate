@@ -13,4 +13,4 @@ from there, so the data and checkpoint paths resolve unchanged. Each writes
 | E5 | `e5_censored_loss.py` | ceiling label vs one-sided hinge for non-failing designs |
 | E6 | `e6_width_sweep.py` | network width 16 to 256: train and test error |
 | E7 | `e7_force_conformal.py` | split-conformal intervals on every member force |
-| E8 | `e8_ood_detection_curve.py` | out-of-domain detection: flag rate, AUROC, recall of harmful errors |
+| E8 | `e8_ood_detection_curve.py` | out-of-domain detection: flag rate, AUROC, recall of out-of-tolerance errors |

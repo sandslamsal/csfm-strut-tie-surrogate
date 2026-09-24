@@ -29,7 +29,7 @@ from config import get_config
 from data import load_archetype
 from model import STMNet
 from make_ensemble import conformal_q, predict, _erfinv, K, CENSOR, SIG_FLOOR
-from figstyle import panel, legend_below
+from figstyle import panel, legend_below, save
 
 ARCHS = [
     ("deepBeam",        "Deep beam",         "#2B63A6"),
@@ -76,8 +76,8 @@ def main() -> None:
     res = {a: archetype_data(a) for a, _, _ in ARCHS}
 
     # ---- 2x2 per-archetype reliability diagrams --------------------------
-    fig, axes = plt.subplots(2, 2, figsize=(7.0, 4.9), sharex=True, sharey=True,
-                             gridspec_kw={"hspace": 0.32, "wspace": 0.12})
+    fig, axes = plt.subplots(2, 2, figsize=(7.0, 4.4), sharex=True, sharey=True,
+                             gridspec_kw={"hspace": 0.38, "wspace": 0.15})
     levels = np.linspace(0.10, 0.95, 28)
     for i, (ax, (arch, label, colour)) in enumerate(zip(axes.ravel(), ARCHS)):
         r = res[arch]
@@ -93,7 +93,6 @@ def main() -> None:
                           label="conformal")
         ax.set_xlim(0, 1)
         ax.set_ylim(0, 1)
-        ax.set_aspect("equal")
         panel(ax, "abcd"[i], label)
         for sp in ("top", "right"):
             ax.spines[sp].set_visible(False)
@@ -104,7 +103,7 @@ def main() -> None:
     fig.tight_layout()
     fig.subplots_adjust(bottom=0.18)
     legend_below(fig, [h_raw, h_conf], ["Raw ensemble spread", "Conformal interval"], ncol=2, y=0.005)
-    fig.savefig(PNG, bbox_inches="tight")
+    save(fig, PNG)
     plt.close(fig)
     print(f"wrote {PNG}")
 

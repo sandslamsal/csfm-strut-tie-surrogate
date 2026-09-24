@@ -1,11 +1,11 @@
-"""E8: the full out-of-domain detection picture.
+"""E8 (R1.7): the full out-of-domain detection picture.
 
 For the released ensembles: the flag rate on the shells delta = 0.1, 0.2,
 0.3 at in-domain alarm rates of 1, 2, 5, 10 and 20 %; the AUROC of the
 ensemble spread as an in-/out-of-domain score; and, more usefully, how many
 of the shell designs whose error exceeds the in-domain 95th-percentile
 error are caught (recall) and what fraction of flagged designs are such
-harmful cases (precision). Writes the vector figure ood_detection.pdf.
+out-of-tolerance cases (precision). Writes the vector figure ood_detection.pdf.
 """
 import json
 from collections import Counter
@@ -83,9 +83,9 @@ for arch in ARCHS:
                       f"prec {100*row['alarm'][a]['precision_harmful']:.0f}%]" for a in ALARMS))
 dump("e8_ood_detection_curve.json", res)
 
-# ---- figure: (a) flag rate vs delta, (b) recall of harmful errors vs alarm rate
-from figstyle import MARKER, tidy, panel, legend_below, INK2
-fig, (a1, a2) = plt.subplots(1, 2, figsize=(7.0, 3.5), gridspec_kw={"wspace": 0.45})
+# ---- figure: (a) flag rate vs delta, (b) recall of out-of-tolerance errors vs alarm rate
+from figstyle import MARKER, tidy, panel, legend_below, INK2, save
+fig, (a1, a2) = plt.subplots(1, 2, figsize=(7.0, 3.3), gridspec_kw={"wspace": 0.45})
 handles, labels, ends = [], [], []
 for arch in ARCHS:
     r = res[arch]
@@ -123,15 +123,15 @@ a2.set_xticks(ALARMS); a2.set_xticklabels([str(a) for a in ALARMS])
 a2.minorticks_off()
 a2.set_xlim(0.85, 27)
 a2.set_xlabel("In-domain alarm rate (%)")
-a2.set_ylabel("Harmful-error designs caught (%)")
+a2.set_ylabel("Out-of-tolerance designs caught (%)")
 a2.set_ylim(0, 100)
-panel(a2, "b", "Harmful errors caught, $\\delta = 0.3$")
+panel(a2, "b", "Out-of-tolerance errors caught, $\\delta = 0.3$")
 for ax in (a1, a2):
     tidy(ax)
 fig.tight_layout(w_pad=2.5)
 fig.subplots_adjust(bottom=0.24)
-legend_below(fig, handles, labels, ncol=4, y=0.005)
+legend_below(fig, handles, labels, ncol=4, y=0.005, columnspacing=1.0)
 FIG_DIR.mkdir(parents=True, exist_ok=True)
-fig.savefig(FIG_DIR / "ood_detection.pdf", bbox_inches="tight")
+save(fig, FIG_DIR / "ood_detection.pdf")
 log(f"wrote {FIG_DIR / 'ood_detection.pdf'}")
 log.done()

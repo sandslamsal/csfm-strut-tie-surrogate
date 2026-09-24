@@ -32,7 +32,7 @@ import torch
 from config import get_config
 from data import load_archetype
 from model import STMNet
-from figstyle import panel, legend_below
+from figstyle import panel, legend_below, save
 
 DATA = "../validation/piercaps_geevar_menon_2018.json"
 SPECS = ["S1", "S2", "S3", "S4", "S5"]
@@ -119,9 +119,10 @@ def combined_figure(path: str, measured, series) -> None:
     _modern(axr)
     panel(axr, "b", "Ratio per specimen")
 
+    fig.tight_layout()
     fig.subplots_adjust(bottom=0.26)
     legend_below(fig, handles, [h.get_label() for h in handles], ncol=3, y=0.005)
-    fig.savefig(path, bbox_inches="tight")
+    save(fig, path)
     plt.close(fig)
     print(f"wrote {path}")
 

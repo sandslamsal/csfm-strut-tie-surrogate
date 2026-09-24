@@ -37,7 +37,7 @@ import torch
 from config import get_config
 from data import load_archetype
 from model import STMNet
-from figstyle import panel
+from figstyle import panel, save
 
 # archetype -> (legend label, marker, colour) -- csfd palette
 ARCHS = [
@@ -272,7 +272,8 @@ def make_figure(results: dict) -> None:
     leg.get_frame().set_linewidth(0.6)
     panel(axc, "b", "Reliability diagram")
 
-    fig.savefig(PNG, bbox_inches="tight")
+    fig.tight_layout()
+    save(fig, PNG)
     plt.close(fig)
     print(f"wrote {PNG}")
 

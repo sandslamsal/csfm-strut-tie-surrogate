@@ -34,8 +34,8 @@ ARCHS = ["deepBeam", "hammerhead", "multiColumnBent", "pileCap"]
 LABEL = {"deepBeam": "Deep beam", "hammerhead": "Hammerhead",
          "multiColumnBent": "Multi-column bent", "pileCap": "Pile cap",
          "deepBeam2P": "Deep beam, two-point loading"}
-COLOUR = {"deepBeam": "#26629E", "hammerhead": "#0E7072",
-          "multiColumnBent": "#E47E1C", "pileCap": "#BE342E"}
+COLOUR = {"deepBeam": "#2B63A6", "hammerhead": "#1F8A70",
+          "multiColumnBent": "#D9761A", "pileCap": "#B8352B"}
 FIG_DIR = HERE.parent / "figures"
 
 
