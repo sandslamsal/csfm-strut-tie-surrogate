@@ -1,4 +1,4 @@
-"""E8 (R1.7): the full out-of-domain detection picture.
+"""E8: the full out-of-domain detection picture.
 
 For the released ensembles: the flag rate on the shells delta = 0.1, 0.2,
 0.3 at in-domain alarm rates of 1, 2, 5, 10 and 20 %; the AUROC of the
